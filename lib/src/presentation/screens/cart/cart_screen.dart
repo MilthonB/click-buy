@@ -1,13 +1,8 @@
-import 'package:card_swiper/card_swiper.dart';
+
 import 'package:clickbuy/src/presentation/provider/auth/login_provider.dart';
 import 'package:clickbuy/src/presentation/provider/cart/cart_provider.dart';
 import 'package:clickbuy/src/presentation/screens/cart/widgets/product_cart.dart';
-import 'package:clickbuy/src/presentation/screens/home/widgets/categories_home.dart';
-import 'package:clickbuy/src/presentation/screens/home/widgets/productos_slideshow.dart';
-import 'package:clickbuy/src/presentation/screens/home/widgets/products_home.dart';
-import 'package:clickbuy/src/presentation/screens/home/widgets/search_products_home.dart';
 import 'package:clickbuy/src/presentation/widgets/sharaed/appbar_shared.dart';
-import 'package:clickbuy/src/presentation/widgets/sharaed/secction_title_shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

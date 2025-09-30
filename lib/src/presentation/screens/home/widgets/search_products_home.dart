@@ -9,8 +9,6 @@ class SearchProduuctsHome extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    
-
     ref.watch(searchProductsProvider);
     // return Text('asdas');
     return SizedBox(

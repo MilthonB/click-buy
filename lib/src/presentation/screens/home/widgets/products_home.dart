@@ -1,6 +1,7 @@
 import 'package:clickbuy/src/presentation/provider/auth/login_provider.dart';
 import 'package:clickbuy/src/presentation/provider/cart/cart_provider.dart';
 import 'package:clickbuy/src/presentation/provider/products/products_provider.dart';
+import 'package:clickbuy/src/presentation/widgets/sharaed/detail_product_dialog_shared.dart';
 import 'package:clickbuy/src/presentation/widgets/sharaed/responsive_grid_view_shared.dart';
 import 'package:clickbuy/src/presentation/widgets/sharaed/secction_title_shared.dart';
 import 'package:clickbuy/src/presentation/widgets/sharaed/shimmer_product_shared.dart';
@@ -56,13 +57,18 @@ class ProductsHome extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // Imagen
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image.network(
-                              product[index].imagen,
-                              height: 150,
-                              width: double.infinity,
-                              fit: BoxFit.contain,
+                          InkWell(
+                            onTap: () {
+                              showProductBottomSheet(context, ref, product[index].id);
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.network(
+                                product[index].imagen,
+                                height: 150,
+                                width: double.infinity,
+                                fit: BoxFit.contain,
+                              ),
                             ),
                           ),
                           const SizedBox(height: 8),

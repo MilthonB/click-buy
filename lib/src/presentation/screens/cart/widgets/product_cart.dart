@@ -28,7 +28,7 @@ class _ProductCartState extends ConsumerState<ProductCart> {
   }
 
   void _updateTotals() {
-    // Obtener los items del carrito con tipo seguro
+    
     final cartAsync = ref.read(cartProvider);
     final cartItems = cartAsync.maybeWhen(
       data: (data) =>
@@ -36,7 +36,7 @@ class _ProductCartState extends ConsumerState<ProductCart> {
       orElse: () => <CartEntity>[],
     );
 
-    // Llamar al notifier de CartTotals para recalcular
+    
     ref.read(cartTotalsProvider.notifier).recalc(cartItems);
   }
 

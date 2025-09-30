@@ -1,4 +1,4 @@
-import 'package:clickbuy/src/config/colors/colors.dart';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,7 +16,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   void initState() {
     super.initState();
-    // pageController = PageController(initialPage: 0, keepPage: true);
     pageController = PageController(initialPage: 0, keepPage: true);
   }
 
@@ -28,22 +27,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    // if( pageController.hasClients ){
-    //   pageController.animateToPage(widget.navigationShell.currentIndex, duration: Duration(milliseconds: 250), curve: Curves.easeOutBack);
-    // }
+
 
     return Scaffold(
       body: PageView(
         physics: const BouncingScrollPhysics(),
-        // scrollDirection: Axis.horizontal,
-        // controller: ,
-        // controller: pageController,
         children: [widget.navigationShell],
-        // children: [
-        //   HomeHistoryView(),
-        //   VeterinariansView(),
-        //   AllNecessitiesView(),
-        // ],
       ),
       bottomNavigationBar: _CustomBottomNavigation(
         navigationShell: widget.navigationShell,
@@ -74,13 +63,6 @@ class _CustomBottomNavigationState extends State<_CustomBottomNavigation> {
       currentIndex: widget.navigationShell.currentIndex,
       type: BottomNavigationBarType.fixed,
       useLegacyColorScheme: false,
-      // backgroundColor: Colors.black,
-      // useLegacyColorScheme: false,
-      // selectedItemColor: Colors.teal[500],
-      // backgroundColor: Colors.white,
-      // enableFeedback: false,
-      // fixedColor: Colors.red,
-      // showSelectedLabels: false,
       unselectedFontSize: 12,
       selectedFontSize: 12,
       selectedLabelStyle: TextStyle(
@@ -94,21 +76,7 @@ class _CustomBottomNavigationState extends State<_CustomBottomNavigation> {
         return _goBranch(value);
       },
       items: [
-        // BottomNavigationBarItem(
-        //   icon: Icon(Icons.home_outlined),
-        //   label: 'Home',
-        //   activeIcon: Icon(Icons.home, color: AppColors.greenNew),
-        // ),
-        // BottomNavigationBarItem(
-        //   icon: Icon(Icons.shopping_bag_outlined),
-        //   label: 'Productos',
-        //   activeIcon: Icon(Icons.shopping_bag, color: AppColors.greenNew),
-        // ),
-        // BottomNavigationBarItem(
-        //   icon: Icon(Icons.search),
-        //   label: 'Carrito',
-        //   activeIcon: Icon(Icons.search, color: AppColors.greenNew),
-        // ),
+ 
 
         BottomNavigationBarItem(
         icon: _NavigationBarHomeActiveOrInActive(
@@ -148,59 +116,6 @@ class _CustomBottomNavigationState extends State<_CustomBottomNavigation> {
           sectionName: 'Carrito',
           isActive: true,
         )),
-        // BottomNavigationBarItem(
-        //   icon: Icon(Icons.search),
-        //   label: 'Carrito',
-        //   activeIcon: Icon(Icons.search, color: AppColors.greenNew),
-        // ),
-
-        // BottomNavigationBarItem(
-        //   icon: Icon(Icons.favorite_border),
-        //   label: 'Favoritos',
-        //   activeIcon: Icon(Icons.favorite, color: AppColors.greenNew),
-        // ),
-
-        // BottomNavigationBarItem(
-        //   icon: Icon(Icons.monetization_on_outlined),
-        //   label: 'Credito',
-        //   activeIcon: Icon(Icons.monetization_on, color: AppColors.greenNew),
-        // ),
-
-        // BottomNavigationBarItem(
-        // icon: Icon(Icons.search),
-        // label: 'Search',
-        // activeIcon: Icon(Icons.search, color:AppColors.greenNew)),
-
-        // BottomNavigationBarItem(
-        // icon: Icon(Icons.abc_outlined),
-        // label: 'Buscador',
-        // activeIcon: Icon(Icons.abc_outlined)),
-        // BottomNavigationBarItem(
-        //   icon: _NavigationBarHomeActiveOrInActive(
-        //     icon: Icon(Icons.route),
-        //     sectionName: 'Productos',
-        //   ),
-        //   label: 'Actividad',
-        //   activeIcon: _NavigationBarHomeActiveOrInActive(
-        //     icon: Icon(Icons.route),
-        //     sectionName: 'Productos',
-        //     isActive: true,
-        //   ),
-        // ),
-        // BottomNavigationBarItem(
-        //     icon: _NavigationBarHomeActiveOrInActive(
-        //       icon: FontAwesomeIcons.play,
-        //       sectionName: 'Videos',
-        //     ),
-        //     label: 'Estados',
-        //     activeIcon: _NavigationBarHomeActiveOrInActive(
-        //       icon: FontAwesomeIcons.play,
-        //       sectionName: 'Videos',
-        //       isActive: true,
-        //     )
-        // ),
-        // BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.paw, size: 20), label: 'Actividad'),
-        // BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.shieldDog, size: 20), label: 'Seguridad'),
       ],
     );
   }

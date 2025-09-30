@@ -6,5 +6,6 @@ abstract class ProductRespositorie {
   Future<List<ProductEntity>> productsCarrusel();
   Future<List<ProductEntity>> producsByCategoryName({String categoryName});
   Future<List<ProductEntity>> products({int limit = 10 , int skip = 10});
+  Future<ProductEntity> productById({int idProduct});
 
 }

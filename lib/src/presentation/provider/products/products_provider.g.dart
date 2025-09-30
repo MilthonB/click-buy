@@ -242,3 +242,93 @@ abstract class _$SearchProducts extends $AsyncNotifier<List<ProductEntity>> {
     element.handleValue(ref, created);
   }
 }
+
+@ProviderFor(ProcutById)
+const procutByIdProvider = ProcutByIdFamily._();
+
+final class ProcutByIdProvider
+    extends $AsyncNotifierProvider<ProcutById, ProductEntity> {
+  const ProcutByIdProvider._({
+    required ProcutByIdFamily super.from,
+    required int super.argument,
+  }) : super(
+         retry: null,
+         name: r'procutByIdProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$procutByIdHash();
+
+  @override
+  String toString() {
+    return r'procutByIdProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  ProcutById create() => ProcutById();
+
+  @override
+  bool operator ==(Object other) {
+    return other is ProcutByIdProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$procutByIdHash() => r'9879bf8599b7f6b1858dc328a675bb6b1546d1bf';
+
+final class ProcutByIdFamily extends $Family
+    with
+        $ClassFamilyOverride<
+          ProcutById,
+          AsyncValue<ProductEntity>,
+          ProductEntity,
+          FutureOr<ProductEntity>,
+          int
+        > {
+  const ProcutByIdFamily._()
+    : super(
+        retry: null,
+        name: r'procutByIdProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  ProcutByIdProvider call(int productId) =>
+      ProcutByIdProvider._(argument: productId, from: this);
+
+  @override
+  String toString() => r'procutByIdProvider';
+}
+
+abstract class _$ProcutById extends $AsyncNotifier<ProductEntity> {
+  late final _$args = ref.$arg as int;
+  int get productId => _$args;
+
+  FutureOr<ProductEntity> build(int productId);
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build(_$args);
+    final ref = this.ref as $Ref<AsyncValue<ProductEntity>, ProductEntity>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<ProductEntity>, ProductEntity>,
+              AsyncValue<ProductEntity>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

@@ -1,10 +1,8 @@
-import 'package:card_swiper/card_swiper.dart';
-import 'package:clickbuy/src/presentation/screens/home/widgets/categories_home.dart';
+
 import 'package:clickbuy/src/presentation/screens/home/widgets/productos_slideshow.dart';
 import 'package:clickbuy/src/presentation/screens/home/widgets/products_home.dart';
 import 'package:clickbuy/src/presentation/screens/home/widgets/search_products_home.dart';
 import 'package:clickbuy/src/presentation/widgets/sharaed/appbar_shared.dart';
-import 'package:clickbuy/src/presentation/widgets/sharaed/secction_title_shared.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -30,14 +28,7 @@ class HomeScreen extends StatelessWidget {
               children: [
                 SearchProduuctsHome(),
                 ProductosSlideshow(),
-                // CategoriesHome(),
-                // PaginatedCategoriesHome(
-                //   categories: List.generate(24, (index) => 'Categoria $index'),
-                // ),
-
-                // SecctionTitleShared(nameSection: 'Productos', seeMore: 'Mirar mas'),
                 ProductsHome(),
-                // ProductosSlideshow(),
               ],
             );
             // Text('data');

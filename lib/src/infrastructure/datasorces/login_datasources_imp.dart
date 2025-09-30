@@ -3,7 +3,6 @@ import 'package:clickbuy/src/domain/datasources/login_datasources.dart';
 import 'package:clickbuy/src/domain/entities/user_entity.dart';
 
 class LoginDatasourcesImp implements LoginDatasources {
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   UserEntity _mapFirebaseUser(User user) {
@@ -22,21 +21,21 @@ class LoginDatasourcesImp implements LoginDatasources {
   }
 
   @override
-  Future<UserEntity> login({String email = '', String password = '', String name =''}) async {
-    
-
+  Future<UserEntity> login({
+    String email = '',
+    String password = '',
+    String name = '',
+  }) async {
     try {
       final userCred = await _auth.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+        email: email,
+        password: password,
+      );
 
-    return _mapFirebaseUser(userCred.user!);
+      return _mapFirebaseUser(userCred.user!);
     } on FirebaseAuthException catch (e) {
       throw e;
     }
-    
-    
   }
 
   @override
@@ -50,32 +49,32 @@ class LoginDatasourcesImp implements LoginDatasources {
     String password = '',
     String name = '', // agregamos name
   }) async {
-
     // print(name);
     // return  UserEntity(id: 'id', email: 'email', name: 'name');
 
     try {
       final userCred = await _auth.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+        email: email,
+        password: password,
+      );
 
-    // Actualizar displayNames
-    await userCred.user?.updateDisplayName(name);
-    await userCred.user?.reload(); // refresca datos
+      await userCred.user?.updateDisplayName(name);
+      await userCred.user?.reload(); // refresca datos
 
-    return _mapFirebaseUser(userCred.user!);
+      return _mapFirebaseUser(userCred.user!);
     } on FirebaseAuthException catch (e) {
       throw e;
     }
-    
-    
   }
-  
+
   @override
   Future<UserEntity?> getCurrentUser() async {
     final user = _auth.currentUser;
-    if(user == null) return null;
-    return UserEntity(id: user.uid, email: user.email!, name: user.displayName!);
+    if (user == null) return null;
+    return UserEntity(
+      id: user.uid,
+      email: user.email!,
+      name: user.displayName!,
+    );
   }
 }

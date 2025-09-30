@@ -33,4 +33,9 @@ class ProductRepositorieImp implements ProductRespositorie {
   Future<List<ProductEntity>> searchProducts({String nameProduct=''}) {
     return datasources.searchProducts(nameProduct: nameProduct);
   }
+  
+  @override
+  Future<ProductEntity> productById({int idProduct = 1}) {
+    return datasources.productById(idProduct: idProduct);
+  }
 }

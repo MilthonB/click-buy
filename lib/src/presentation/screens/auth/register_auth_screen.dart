@@ -150,7 +150,7 @@ class RegisterAuthScreen extends ConsumerWidget {
       hintStyle: const TextStyle(color: Colors.white70),
       prefixIcon: Icon(icon, color: Colors.white70),
       filled: true,
-      fillColor: Colors.white.withOpacity(0.1),
+      fillColor: Colors.white10,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide.none,
@@ -263,12 +263,11 @@ class RegisterAuthScreen extends ConsumerWidget {
       return;
     }
 
-     showDialog(
+    showDialog(
       context: context,
       barrierDismissible: false, // para que no se cierre tocando afuera
       builder: (_) => const Center(child: CircularProgressIndicator()),
     );
-
 
     final registerNotifier = ref.read(registerProvider.notifier);
 
@@ -281,9 +280,14 @@ class RegisterAuthScreen extends ConsumerWidget {
     registerState.when(
       data: (user) {
         if (user != null) {
-          ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(backgroundColor: Colors.teal, content: Text('Tu registro fue exitoso ahora puedes iniciar sesion')));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Colors.teal,
+              content: Text(
+                'Tu registro fue exitoso ahora puedes iniciar sesion',
+              ),
+            ),
+          );
           context.go('/login');
         }
       },
@@ -294,6 +298,5 @@ class RegisterAuthScreen extends ConsumerWidget {
       },
       loading: () {},
     );
-
   }
 }

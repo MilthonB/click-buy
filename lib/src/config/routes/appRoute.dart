@@ -13,42 +13,33 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final _sectionNavigatorKey = GlobalKey<NavigatorState>();
 
-// Provider para GoRouter
 final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     navigatorKey: _sectionNavigatorKey,
     initialLocation: '/home-screen',
-    
-  redirect: (context, state) {
-  final authState = ref.watch(loginProvider);
 
-  return authState.when(
-    data: (user) {
-      final isLoggedIn = user != null;
-      final goingToCart = state.fullPath == '/cart';
-      final goingToLoginOrRegister = state.fullPath == '/login' || state.fullPath == '/register';
-      
-      
-      if (!isLoggedIn) {
-        // Usuario no logueado
-        if (goingToCart) return '/home-screen'; // evita ir al carrito
-        return null; // permite otras rutas públicas
-      }
+    redirect: (context, state) {
+      final authState = ref.watch(loginProvider);
 
-     
+      return authState.when(
+        data: (user) {
+          final isLoggedIn = user != null;
+          final goingToCart = state.fullPath == '/cart';
+          final goingToLoginOrRegister =
+              state.fullPath == '/login' || state.fullPath == '/register';
 
-      // print(user != null && state.fullPath == '/login' || state.fullPath == '/register');
+          if (!isLoggedIn) {
+            if (goingToCart) return '/home-screen';
+            return null;
+          }
+          if (isLoggedIn && goingToLoginOrRegister) return '/home-screen';
 
-      // Usuario logueado: si intenta entrar a login o register, lo manda a home
-      if (isLoggedIn && goingToLoginOrRegister) return '/home-screen';
-
-      return null; // todo bien, no redirige
+          return null;
+        },
+        loading: () => null,
+        error: (_, __) => '/login',
+      );
     },
-    loading: () => null, // mientras carga login, no redirige
-    error: (_, __) => '/login', // si hay error, lo manda a login
-  );
-},
-
 
     errorBuilder: (context, state) => const NotfoundScreens(),
 
@@ -59,9 +50,10 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             child: LoginAuthScreen(),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              return FadeTransition(opacity: animation, child: child);
-            },
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
           );
         },
       ),
@@ -71,24 +63,26 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             child: RegisterAuthScreen(),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              return FadeTransition(opacity: animation, child: child);
-            },
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
           );
         },
       ),
 
-      GoRoute(
-        path: '/welcome',
-        pageBuilder: (context, state) {
-          return CustomTransitionPage(
-            child: WelcomeScreen(),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              return FadeTransition(opacity: animation, child: child);
-            },
-          );
-        },
-      ),
+      // GoRoute(
+      //   path: '/welcome',
+      //   pageBuilder: (context, state) {
+      //     return CustomTransitionPage(
+      //       child: WelcomeScreen(),
+      //       transitionsBuilder:
+      //           (context, animation, secondaryAnimation, child) {
+      //             return FadeTransition(opacity: animation, child: child);
+      //           },
+      //     );
+      //   },
+      // ),
 
       // Shell navigation (rutas protegidas)
       StatefulShellRoute.indexedStack(
@@ -103,14 +97,13 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                 pageBuilder: (context, state) {
                   return CustomTransitionPage(
                     child: HomeScreen(),
-                    transitionsBuilder: (
-                      context,
-                      animation,
-                      secondaryAnimation,
-                      child,
-                    ) {
-                      return FadeTransition(opacity: animation, child: child);
-                    },
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        },
                   );
                 },
               ),
@@ -124,14 +117,13 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                 pageBuilder: (context, state) {
                   return CustomTransitionPage(
                     child: ProductsScreen(),
-                    transitionsBuilder: (
-                      context,
-                      animation,
-                      secondaryAnimation,
-                      child,
-                    ) {
-                      return FadeTransition(opacity: animation, child: child);
-                    },
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        },
                   );
                 },
               ),
@@ -145,14 +137,13 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                 pageBuilder: (context, state) {
                   return CustomTransitionPage(
                     child: CartScreen(),
-                    transitionsBuilder: (
-                      context,
-                      animation,
-                      secondaryAnimation,
-                      child,
-                    ) {
-                      return FadeTransition(opacity: animation, child: child);
-                    },
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        },
                   );
                 },
               ),

@@ -19,16 +19,16 @@ class ProductByCategory extends _$ProductByCategory {
   }
 
   Future<void> getProductsByCategory(String categoryName) async {
-    state = const AsyncLoading(); // 🔄 loading en UI
+    state = const AsyncLoading();
     try {
       final datasources = ref.read(productRepositorieProvider);
       final resp = await datasources.producsByCategoryName(
         categoryName: categoryName,
       );
 
-      state = AsyncData(resp); // ✅ datos listos
+      state = AsyncData(resp); 
     } catch (e, st) {
-      state = AsyncError(e, st); // ❌ error manejado
+      state = AsyncError(e, st); 
     }
   }
 }
@@ -43,13 +43,13 @@ class GetProducts extends _$GetProducts {
   }
 
   Future<void> getProducts() async {
-    state = const AsyncLoading(); // 🔄 loading en UI
+    state = const AsyncLoading(); 
     try {
       final datasources = ref.read(productRepositorieProvider);
       final resp = await datasources.products();
-      state = AsyncData(resp); // ✅ datos listos
+      state = AsyncData(resp); 
     } catch (e, st) {
-      state = AsyncError(e, st); // ❌ error manejado
+      state = AsyncError(e, st);
     }
   }
 
@@ -70,13 +70,13 @@ class GetProducts extends _$GetProducts {
     }
 
     Future<void> getProductsCarrusel() async {
-      state = const AsyncLoading(); // 🔄 loading en UI
+      state = const AsyncLoading(); 
       try {
         final datasources = ref.read(productRepositorieProvider);
         final resp = await datasources.productsCarrusel();
-        state = AsyncData(resp); // ✅ datos listos
+        state = AsyncData(resp); 
       } catch (e, st) {
-        state = AsyncError(e, st); // ❌ error manejado
+        state = AsyncError(e, st); 
       }
     }
   }
@@ -90,15 +90,15 @@ class SearchProducts extends _$SearchProducts {
   }
 
   Future<void> searchProduct(String nameProduct) async {
-    state = const AsyncLoading(); // 🔄 loading en UI
+    state = const AsyncLoading(); 
     try {
       final datasources = ref.read(productRepositorieProvider);
       final resp = await datasources.searchProducts(nameProduct: nameProduct);
-      state = AsyncData(resp); // ✅ datos listos
+      state = AsyncData(resp); 
       ref.read(getProductsProvider.notifier).setProduct(AsyncData(resp));
 
     } catch (e, st) {
-      state = AsyncError(e, st); // ❌ error manejado
+      state = AsyncError(e, st); 
       return;
     }
 
@@ -106,6 +106,16 @@ class SearchProducts extends _$SearchProducts {
 
 }
 
+
+@riverpod
+class ProcutById extends _$ProcutById {
+  @override
+  Future<ProductEntity> build(int productId) async {
+    final respo = ref.watch(productRepositorieProvider);
+    final product = await respo.productById(idProduct: productId);
+    return Future.value(product);
+  }
+}
 
 
 
