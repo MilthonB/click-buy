@@ -16,6 +16,7 @@ cd click-buy
 
 ```bash
 flutter pub get
+flutter run
 ```
 ## 3️⃣ Configurar Firebase localmente
 
