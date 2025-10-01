@@ -16,8 +16,8 @@ cd click-buy
 
 ```bash
 flutter pub get
-flutter run
 ```
+
 ## 3️⃣ Configurar Firebase localmente
 
 El archivo lib/firebase_option.dart no se encuentra en el respositorio por motivos de seguridad.
@@ -29,15 +29,34 @@ El archivo lib/firebase_option.dart no se encuentra en el respositorio por motiv
    - Dentro del proyecto, selecciona "Agregar app" y elige **Flutter**.
    - Sigue las instrucciones que Firebase te indique para registrar tu app.
 
-3. **Configurar la base de datos para desarrollo:**
-   - Para propósitos de prueba, puedes ajustar las reglas de Firestore para permitir lectura y escritura temporalmente:
-     ```bash
-        allow read, write: if true;
-     ```
-   - ⚠️ **Importante:** Esto solo se recomienda para desarrollo y pruebas.
+# Configuración de Firebase (Auth + Firestore)
 
-4. **Resultado final:**
-   - Una vez completado, tu proyecto Flutter estará vinculado a Firebase y listo para ejecutar, usando tus propias credenciales locales.
+## Habilitar Autenticación (Email/Contraseña)
+- Ve a [Firebase Console](https://console.firebase.google.com/).
+- Selecciona tu proyecto.
+- En el panel lateral izquierdo entra a **Compilación > Authentication**.
+- Abre la pestaña **Método de acceso**.
+- Activa el proveedor **Correo electrónico/contraseña**.
+- Haz clic en **Guardar**.
+
+---
+
+## ✅ Habilitar Cloud Firestore
+- En el panel lateral izquierdo entra a **Compilación > Firestore Database**.
+- Haz clic en **Crear base de datos**.
+- **(Edición):** Selecciona **Estándar (Standard)**.
+- **Paso 1 (Ubicación):** Elige la ubicación de la base de datos → **United States** (recomendado).  
+  > 🔹 No necesitas asignar un ID en este paso. 
+- **Paso 2 (Modo):** Selecciona el modo de la base de datos:  
+  - Seleccionamos **Modo prueba** (válido por 30 días, acceso abierto).   
+- **Paso 3 (Confirmación):** Haz clic en **Habilitar**.
+
+---
+
+## Notas importantes
+- El **Modo prueba** expira en **30 días**, deberás actualizar las reglas después.
+- Si no ves **Authentication** o **Firestore Database**, asegúrate de estar en el proyecto correcto.
+
 
 
 # ¿Por qué usaste ese patrón de estado?
