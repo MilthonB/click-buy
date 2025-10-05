@@ -3,10 +3,20 @@ import 'package:clickbuy/src/domain/datasources/cart_datasources.dart';
 import 'package:clickbuy/src/domain/entities/cart_entity.dart';
 import 'package:clickbuy/src/domain/entities/product_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 
 class CartDatasourcesImp implements CartDatasources {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final DioClient _client = DioClient();
+  final FirebaseFirestore _firestore;
+  final DioClient _client;
+
+  // prod
+  CartDatasourcesImp()
+      : _firestore = FirebaseFirestore.instance,
+        _client = DioClient();
+
+  //test
+  CartDatasourcesImp.forTest(this._firestore, Dio dio)
+      : _client = DioClient.forTest(dio);
 
   @override
   Future<void> addProduct({

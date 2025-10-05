@@ -58,4 +58,10 @@ class DioClient {
       },
     ));
   }
+
+    DioClient.forTest(Dio dio) {
+    this.dio = dio;
+  }
 }
+
+
