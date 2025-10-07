@@ -18,26 +18,22 @@ class ProductsHome extends ConsumerWidget {
     ref.watch(cartProvider);
     ref.watch(cartQuantityProvider);
 
-
-
     return products.when(
       data: (product) {
-
         return Padding(
           padding: const EdgeInsets.all(15.0),
           child: Column(
             children: [
-              SecctionTitleShared(
-                nameSection: 'Productos',
-                seeMore: '',
-              ),
+              SecctionTitleShared(nameSection: 'Productos', seeMore: ''),
               ResponsiveGridView(
                 items: product,
                 columnWidth: 200,
                 mainAxisExtent: 530,
                 itemBuilder: (context, index) {
                   print(product[index].rating);
-                final quantity = ref.watch(cartQuantityProvider.notifier).getQuantity(product[index].id);
+                  final quantity = ref
+                      .watch(cartQuantityProvider.notifier)
+                      .getQuantity(product[index].id);
                   return Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
@@ -59,7 +55,11 @@ class ProductsHome extends ConsumerWidget {
                           // Imagen
                           InkWell(
                             onTap: () {
-                              showProductBottomSheet(context, ref, product[index].id);
+                              showProductBottomSheet(
+                                context,
+                                ref,
+                                product[index].id,
+                              );
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(12),
@@ -122,18 +122,30 @@ class ProductsHome extends ConsumerWidget {
 
                           // Rating en estrellas
                           // final currentProduct = product[0]; // el único producto
+                          Row(
+                            children: List.generate(5, (starIndex) {
+                              if (starIndex < product[index].rating.floor()) {
+                                return const Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                  size: 18,
+                                );
+                              } else if (starIndex < product[index].rating) {
+                                return const Icon(
+                                  Icons.star_half,
+                                  color: Colors.amber,
+                                  size: 18,
+                                );
+                              } else {
+                                return const Icon(
+                                  Icons.star_border,
+                                  color: Colors.amber,
+                                  size: 18,
+                                );
+                              }
+                            }),
+                          ),
 
-Row(
-  children: List.generate(5, (starIndex) {
-    if (starIndex < product[index].rating.floor()) {
-      return const Icon(Icons.star, color: Colors.amber, size: 18);
-    } else if (starIndex < product[index].rating) {
-      return const Icon(Icons.star_half, color: Colors.amber, size: 18);
-    } else {
-      return const Icon(Icons.star_border, color: Colors.amber, size: 18);
-    }
-  }),
-),
                           // Row(
                           //   children: List.generate(5, (index) {
                           //     if (index < product[index].rating.floor()) {
@@ -157,7 +169,6 @@ Row(
                           //     }
                           //   }),
                           // ),
-
                           const SizedBox(height: 4),
 
                           // Stock
@@ -190,7 +201,11 @@ Row(
                                           color: Colors.white,
                                         ),
                                         onPressed: () {
-                                          ref.read(cartQuantityProvider.notifier).decrement(product[index].id);
+                                          ref
+                                              .read(
+                                                cartQuantityProvider.notifier,
+                                              )
+                                              .decrement(product[index].id);
                                         },
                                       ),
                                       Text(
@@ -206,7 +221,14 @@ Row(
                                           color: Colors.white,
                                         ),
                                         onPressed: () {
-                                          ref.read(cartQuantityProvider.notifier).increment(product[index].id, product[index].stock);
+                                          ref
+                                              .read(
+                                                cartQuantityProvider.notifier,
+                                              )
+                                              .increment(
+                                                product[index].id,
+                                                product[index].stock,
+                                              );
                                         },
                                       ),
                                     ],
@@ -235,29 +257,39 @@ Row(
                                           return;
                                         }
 
+                                        final quantity = ref
+                                            .read(cartQuantityProvider.notifier)
+                                            .getQuantity(product[index].id);
 
-                                        final quantity = ref.read(cartQuantityProvider.notifier).getQuantity(product[index].id);
-
-
-                                        // si todo sale bien mostrar mensaje 
+                                        // si todo sale bien mostrar mensaje
                                         ref
                                             .read(cartProvider.notifier)
-                                            .addToCart(user.id, product[index], quantity: quantity );
-
-                                         ref.read(cartQuantityProvider.notifier).setQuantity(product[index].id, 1, product[index].stock);
-                                         ScaffoldMessenger.of(
-                                            context,
-                                          ).showSnackBar(
-                                            SnackBar(
-                                              backgroundColor: Colors.teal,
-                                              content: Text(
-                                                'Agregaste ${product[index].title} al carrito',
-                                              ),
-                                              duration: Duration(
-                                                seconds: 3,
-                                              ), // cuánto dura visible
-                                            )
+                                            .addToCart(
+                                              user.id,
+                                              product[index],
+                                              quantity: quantity,
                                             );
+
+                                        ref
+                                            .read(cartQuantityProvider.notifier)
+                                            .setQuantity(
+                                              product[index].id,
+                                              1,
+                                              product[index].stock,
+                                            );
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          SnackBar(
+                                            backgroundColor: Colors.teal,
+                                            content: Text(
+                                              'Agregaste ${product[index].title} al carrito',
+                                            ),
+                                            duration: Duration(
+                                              seconds: 3,
+                                            ), // cuánto dura visible
+                                          ),
+                                        );
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.orangeAccent,
@@ -306,7 +338,7 @@ Row(
       error: (error, stackTrace) {
         return Text('');
       },
-      loading:() => ShimmerProductShared(),
+      loading: () => ShimmerProductShared(),
     );
   }
 }
