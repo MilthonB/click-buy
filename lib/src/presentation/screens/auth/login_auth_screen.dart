@@ -246,19 +246,27 @@ class LoginAuthScreen extends ConsumerWidget {
       return;
     }
 
+    // Guarda el loginNotifier ANTES del await
+    final loginNotifier = ref.read(loginProvider.notifier);
+
+    // Mostrar cargando
     showDialog(
       context: context,
-      barrierDismissible: false, // para que no se cierre tocando afuera
+      barrierDismissible: false,
       builder: (_) => const Center(child: CircularProgressIndicator()),
     );
 
-    final loginNotifier = ref.read(loginProvider.notifier);
-
+    // Esperar login
     await loginNotifier.login(email: email, password: password);
 
-    final loginState = ref.read(loginProvider);
+    // Verificar si el contexto sigue montado antes de usar Navigator o context
+    if (!context.mounted) return;
 
+    // Cerrar el diálogo de carga si sigue abierto
     if (Navigator.canPop(context)) Navigator.pop(context);
+
+    // Ahora ya es seguro leer el estado del provider
+    final loginState = ref.read(loginProvider);
 
     loginState.when(
       data: (user) {

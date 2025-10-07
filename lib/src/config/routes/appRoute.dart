@@ -6,7 +6,6 @@ import 'package:clickbuy/src/presentation/screens/cart/cart_screen.dart';
 import 'package:clickbuy/src/presentation/screens/home/home_screen.dart';
 import 'package:clickbuy/src/presentation/screens/notfound/notfound_screens.dart';
 import 'package:clickbuy/src/presentation/screens/products/products_screen.dart';
-import 'package:clickbuy/src/presentation/screens/welcome/welcome_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

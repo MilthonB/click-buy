@@ -6,8 +6,12 @@ import 'package:dio/dio.dart';
 import 'package:clickbuy/src/domain/entities/cart_entity.dart';
 
 class MockFirestore extends Mock implements FirebaseFirestore {}
+
+// ignore: subtype_of_sealed_class
 class MockCollectionReference extends Mock implements CollectionReference<Map<String, dynamic>> {}
+// ignore: subtype_of_sealed_class
 class MockDocumentReference extends Mock implements DocumentReference<Map<String, dynamic>> {}
+// ignore: subtype_of_sealed_class
 class MockDocumentSnapshot extends Mock implements DocumentSnapshot<Map<String, dynamic>> {}
 class MockDio extends Mock implements Dio {}
 class MockResponse extends Mock implements Response {}

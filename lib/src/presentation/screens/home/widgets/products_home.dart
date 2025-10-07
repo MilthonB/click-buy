@@ -36,8 +36,8 @@ class ProductsHome extends ConsumerWidget {
                 columnWidth: 200,
                 mainAxisExtent: 530,
                 itemBuilder: (context, index) {
+                  print(product[index].rating);
                 final quantity = ref.watch(cartQuantityProvider.notifier).getQuantity(product[index].id);
-
                   return Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
@@ -121,29 +121,42 @@ class ProductsHome extends ConsumerWidget {
                           const SizedBox(height: 4),
 
                           // Rating en estrellas
-                          Row(
-                            children: List.generate(5, (index) {
-                              if (index < product[index].rating.floor()) {
-                                return const Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
-                                  size: 18,
-                                );
-                              } else if (index < product[index].rating) {
-                                return const Icon(
-                                  Icons.star_half,
-                                  color: Colors.amber,
-                                  size: 18,
-                                );
-                              } else {
-                                return const Icon(
-                                  Icons.star_border,
-                                  color: Colors.amber,
-                                  size: 18,
-                                );
-                              }
-                            }),
-                          ),
+                          // final currentProduct = product[0]; // el único producto
+
+Row(
+  children: List.generate(5, (starIndex) {
+    if (starIndex < product[index].rating.floor()) {
+      return const Icon(Icons.star, color: Colors.amber, size: 18);
+    } else if (starIndex < product[index].rating) {
+      return const Icon(Icons.star_half, color: Colors.amber, size: 18);
+    } else {
+      return const Icon(Icons.star_border, color: Colors.amber, size: 18);
+    }
+  }),
+),
+                          // Row(
+                          //   children: List.generate(5, (index) {
+                          //     if (index < product[index].rating.floor()) {
+                          //       return const Icon(
+                          //         Icons.star,
+                          //         color: Colors.amber,
+                          //         size: 18,
+                          //       );
+                          //     } else if (index < product[index].rating) {
+                          //       return const Icon(
+                          //         Icons.star_half,
+                          //         color: Colors.amber,
+                          //         size: 18,
+                          //       );
+                          //     } else {
+                          //       return const Icon(
+                          //         Icons.star_border,
+                          //         color: Colors.amber,
+                          //         size: 18,
+                          //       );
+                          //     }
+                          //   }),
+                          // ),
 
                           const SizedBox(height: 4),
 
