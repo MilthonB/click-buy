@@ -2,6 +2,8 @@ import 'package:clickbuy/src/config/api/dio.dart';
 import 'package:clickbuy/src/domain/datasources/cart_datasources.dart';
 import 'package:clickbuy/src/domain/entities/cart_entity.dart';
 import 'package:clickbuy/src/domain/entities/product_entity.dart';
+import 'package:clickbuy/src/infrastructure/mappers/products_mapper.dart';
+import 'package:clickbuy/src/infrastructure/models/products_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 
@@ -65,20 +67,12 @@ class CartDatasourcesImp implements CartDatasources {
       final response = await _client.dio.get('/products/${item['productId']}');
       final data = response.data;
 
-      final product = ProductEntity(
-        id: data['id'],
-        title: data['title'],
-        description: data['description'],
-        price: (data['price'] as num).toDouble(),
-        discountPercentage: (data['discountPercentage'] as num).toDouble(),
-        rating: (data['rating'] as num).toDouble(),
-        stock: data['stock'],
-        tags: List<String>.from(data['tags'] ?? []),
-        sku: data['sku'] ?? '',
-        imagen: data['thumbnail'] ?? '',
-      );
 
-      cartItems.add(CartEntity(product: product, quantity: item['quantity']));
+      final model = ProductsModel.json(data);
+
+      final productEnity = ProductsMapper.productModuleToEntity(model);
+
+      cartItems.add(CartEntity(product: productEnity, quantity: item['quantity']));
     }
 
     return cartItems;

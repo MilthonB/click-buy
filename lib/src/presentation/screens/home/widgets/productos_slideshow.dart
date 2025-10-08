@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:clickbuy/src/domain/entities/product_entity.dart';
 import 'package:clickbuy/src/presentation/provider/products/products_provider.dart';
+import 'package:clickbuy/src/presentation/widgets/sharaed/detail_product_dialog_shared.dart';
 import 'package:clickbuy/src/presentation/widgets/sharaed/shimmer_carrusel_shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -74,20 +75,25 @@ class _Slider extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.network(
-                product.imagen,
-                fit: BoxFit.contain,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress != null) {
-                    return Container(
-                      decoration: BoxDecoration(color: Colors.black12),
-                    );
-                  }
-                  // return Placeholder();
-                  return FadeIn(child: child);
-                },
+            GestureDetector(
+              onTap: () {
+                showProductBottomSheet(context, ref, product.id);
+              },
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.network(
+                  product.imagen,
+                  fit: BoxFit.contain,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress != null) {
+                      return Container(
+                        decoration: BoxDecoration(color: Colors.black12),
+                      );
+                    }
+                    // return Placeholder();
+                    return FadeIn(child: child);
+                  },
+                ),
               ),
             ),
             Column(

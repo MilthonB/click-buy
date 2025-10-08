@@ -2,6 +2,7 @@
 import 'package:clickbuy/src/presentation/screens/home/widgets/products_home.dart';
 import 'package:clickbuy/src/presentation/screens/home/widgets/search_products_home.dart';
 import 'package:clickbuy/src/presentation/widgets/sharaed/appbar_shared.dart';
+import 'package:clickbuy/src/presentation/widgets/sharaed/select_category_shared.dart';
 import 'package:flutter/material.dart';
 
 class ProductsScreen extends StatelessWidget {
@@ -29,6 +30,7 @@ class ProductsScreen extends StatelessWidget {
             return Column(
               children: [
                 SearchProduuctsHome(),
+                SelectCategoryShared(),
                 ProductsHome()
               ],
             );

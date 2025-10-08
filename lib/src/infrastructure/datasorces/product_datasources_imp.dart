@@ -16,21 +16,15 @@ class ProductDatasourcesImp implements ProductsDatasources {
       final response = await _client.dio.get(
         '/products/category/$categoryName',
         queryParameters: {
-          "limit": 10,
+          "limit": 20,
           "select":
               "id,title,description,price,discountPercentage,rating,stock,tags,sku,thumbnail",
         },
       );
 
       final productsJson = response.data['products'] as List<dynamic>;
-      final model = productsJson
-          .map((json) => ProductsModel.json(json))
-          .toList();
-
-      final entity = model
-          .map((model) => ProductsMapper.productModuleToEntity(model))
-          .toList();
-      return entity;
+      return mapJsonToProductEntity(productsJson);
+      
     } on DioException catch (e) {
       rethrow;
     } catch (e) {
@@ -44,7 +38,7 @@ class ProductDatasourcesImp implements ProductsDatasources {
       final response = await _client.dio.get(
         '/products',
         queryParameters: {
-          "limit": limit,
+          "limit": 20,
           "skip": skip,
           "select":
               "id,title,description,price,discountPercentage,rating,stock,tags,sku,thumbnail",
@@ -52,14 +46,8 @@ class ProductDatasourcesImp implements ProductsDatasources {
       );
 
       final productsJson = response.data['products'] as List<dynamic>;
-      final model = productsJson
-          .map((json) => ProductsModel.json(json))
-          .toList();
+      return mapJsonToProductEntity(productsJson);
 
-      final entity = model
-          .map((model) => ProductsMapper.productModuleToEntity(model))
-          .toList();
-      return entity;
     } on DioException catch (e) {
       rethrow;
     } catch (e) {
@@ -83,14 +71,8 @@ class ProductDatasourcesImp implements ProductsDatasources {
       );
 
       final productsJson = response.data['products'] as List<dynamic>;
-      final model = productsJson
-          .map((json) => ProductsModel.json(json))
-          .toList();
-
-      final entity = model
-          .map((model) => ProductsMapper.productModuleToEntity(model))
-          .toList();
-      return entity;
+      return mapJsonToProductEntity(productsJson);
+      
     } on DioException catch (e) {
       rethrow;
     } catch (e) {
@@ -112,14 +94,8 @@ class ProductDatasourcesImp implements ProductsDatasources {
       );
 
       final productsJson = response.data['products'] as List<dynamic>;
-      final model = productsJson
-          .map((json) => ProductsModel.json(json))
-          .toList();
+      return mapJsonToProductEntity(productsJson);
 
-      final entity = model
-          .map((model) => ProductsMapper.productModuleToEntity(model))
-          .toList();
-      return entity;
     } on DioException catch (e) {
       rethrow;
     } catch (e) {
@@ -140,14 +116,35 @@ class ProductDatasourcesImp implements ProductsDatasources {
       );
 
       final productsJson = response.data;
-      final model =  ProductsModel.json(productsJson);
-
-      final entity = ProductsMapper.productModuleToEntity(model);
-      return entity;
+      return mapJsonToProductEntity(productsJson);
+  
     } on DioException catch (e) {
       rethrow;
     } catch (e) {
       throw Exception("Error inesperado: $e");
     }
+  }
+
+
+  dynamic mapJsonToProductEntity(dynamic productsJson){
+
+    if(productsJson is List){
+      final model = productsJson
+          .map((json) => ProductsModel.json(json))
+          .toList();
+
+      final entity = model
+          .map((model) => ProductsMapper.productModuleToEntity(model))
+          .toList();
+
+      return entity;
+    }
+
+
+    final model =  ProductsModel.json(productsJson);
+    final entity = ProductsMapper.productModuleToEntity(model);
+
+
+    return entity;
   }
 }

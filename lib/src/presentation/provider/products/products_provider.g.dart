@@ -68,7 +68,7 @@ final class ProductByCategoryProvider
         argument: null,
         retry: null,
         name: r'productByCategoryProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -81,7 +81,7 @@ final class ProductByCategoryProvider
   ProductByCategory create() => ProductByCategory();
 }
 
-String _$productByCategoryHash() => r'080a16a63142f766aa1b8be429b125e59a2e5880';
+String _$productByCategoryHash() => r'aa51c9bec3801a6fe3d3478cf425f18d17dc5158';
 
 abstract class _$ProductByCategory extends $AsyncNotifier<List<ProductEntity>> {
   FutureOr<List<ProductEntity>> build();
@@ -96,6 +96,59 @@ abstract class _$ProductByCategory extends $AsyncNotifier<List<ProductEntity>> {
             as $ClassProviderElement<
               AnyNotifier<AsyncValue<List<ProductEntity>>, List<ProductEntity>>,
               AsyncValue<List<ProductEntity>>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}
+
+@ProviderFor(SelectedCategory)
+const selectedCategoryProvider = SelectedCategoryProvider._();
+
+final class SelectedCategoryProvider
+    extends $NotifierProvider<SelectedCategory, String> {
+  const SelectedCategoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'selectedCategoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$selectedCategoryHash();
+
+  @$internal
+  @override
+  SelectedCategory create() => SelectedCategory();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(String value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<String>(value),
+    );
+  }
+}
+
+String _$selectedCategoryHash() => r'bebd00037490af87ece2e992eba98fc75907e462';
+
+abstract class _$SelectedCategory extends $Notifier<String> {
+  String build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<String, String>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<String, String>,
+              String,
               Object?,
               Object?
             >;

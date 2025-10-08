@@ -11,27 +11,48 @@ ProductRespositorie productRepositorie(ref) {
   return ProductRepositorieImp(ProductDatasourcesImp());
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class ProductByCategory extends _$ProductByCategory {
   @override
   Future<List<ProductEntity>> build() {
     return Future.value(null);
   }
 
-  Future<void> getProductsByCategory(String categoryName) async {
-    state = const AsyncLoading();
-    try {
-      final datasources = ref.read(productRepositorieProvider);
-      final resp = await datasources.producsByCategoryName(
-        categoryName: categoryName,
-      );
+ Future<void> getProductsByCategory(String categoryName) async {
+  ref.read(getProductsProvider.notifier).state = const AsyncLoading();
 
-      state = AsyncData(resp); 
-    } catch (e, st) {
-      state = AsyncError(e, st); 
-    }
+  try {
+    final datasources = ref.read(productRepositorieProvider);
+    final resp = await datasources.producsByCategoryName(categoryName: categoryName);
+
+
+    // if (!ref.mounted) return;
+   
+
+    state = AsyncData(resp);
+    ref.read(getProductsProvider.notifier).setProduct(AsyncData(resp));
+
+  } catch (e, st) {
+    state = AsyncError(e, st);
+    state = AsyncError(e, st);
   }
 }
+
+}
+
+
+
+@riverpod
+class SelectedCategory extends _$SelectedCategory {
+  @override
+   String build() {
+    return 'all';
+  }
+  void setCategory(String category) {
+    state = category;
+  }
+}
+
 
 @riverpod
 class GetProducts extends _$GetProducts {
