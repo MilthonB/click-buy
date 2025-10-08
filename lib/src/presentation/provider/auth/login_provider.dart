@@ -20,53 +20,53 @@ LoginRepositories loginRepositorie(ref) {
 class Register extends _$Register {
   @override
   Future<UserEntity?> build() async {
+   
     return Future.value(null);
   }
 
   Future<void> signUp({
-    required String email,
-    required String password,
-    required String name,
-  }) async {
-    state = const AsyncLoading();
+  required String email,
+  required String password,
+  required String name
+}) async {
+
+  state = const AsyncLoading(); 
 
     final repo = ref.read(loginRepositorieProvider);
 
     try {
-      final user = await repo.register(
-        email: email,
-        password: password,
-        name: name,
-      );
+      final user = await repo.register(email: email, password: password, name: name);
 
       if (!ref.mounted) return;
 
       state = AsyncData(user);
+
     } on FirebaseAuthException catch (e) {
       if (!ref.mounted) return;
 
       String message;
       switch (e.code) {
-        case 'invalid-email':
-          message = 'Correo inválido';
-          break;
-        case 'weak-password':
-          message = 'La contraseña debe ser mayor a 6 carcateres';
-          break;
-        case 'email-already-in-use':
-          message = 'Email ya registrado, ingresa uno nuevo';
-          break;
-        default:
-          message = e.message ?? 'Error de autenticación';
+        case 'invalid-email': message = 'Correo inválido'; break;
+        case 'weak-password': message = 'La contraseña debe ser mayor a 6 carcateres'; break;
+        case 'email-already-in-use': message = 'Email ya registrado, ingresa uno nuevo'; break;
+        default: message = e.message ?? 'Error de autenticación';
       }
 
-      state = AsyncError(message, StackTrace.current);
+      state = AsyncError(message, StackTrace.current); 
+
     } catch (e, st) {
       if (!ref.mounted) return;
       state = AsyncError('Error inesperado', st);
     }
-  }
+
+
+
+
 }
+
+}
+
+
 
 @riverpod
 class TotalItems extends _$TotalItems {
@@ -76,22 +76,27 @@ class TotalItems extends _$TotalItems {
   }
 }
 
+
 @Riverpod(keepAlive: true)
 class Login extends _$Login {
   @override
   Future<UserEntity?> build() async {
+
     final repo = ref.read(loginRepositorieProvider);
     return await repo.getCurrentUser();
 
-    // return null;
+    // return null; 
   }
 
-  UserEntity? getUser() {
+  UserEntity? getUser(){
     return state.value;
   }
 
-  Future<void> login({required String email, required String password}) async {
-    state = const AsyncLoading();
+  Future<void> login({
+    required String email,
+    required String password,
+  }) async {
+    state = const AsyncLoading(); 
 
     final repo = ref.read(loginRepositorieProvider);
 
@@ -100,41 +105,40 @@ class Login extends _$Login {
 
       if (!ref.mounted) return;
 
-      state = AsyncData(user);
+      state = AsyncData(user); 
+
     } on FirebaseAuthException catch (e) {
       if (!ref.mounted) return;
 
+    
       String message;
       switch (e.code) {
-        case 'invalid-credential':
-          message = 'Correo o contraseña inválido';
-          break;
-        case 'invalid-email':
-          message = 'Correo inválido';
-          break;
-        case 'user-not-found':
-          message = 'Usuario no encontrado';
-          break;
-        case 'wrong-password':
-          message = 'Contraseña incorrecta';
-          break;
-        default:
-          message = e.message ?? 'Error de autenticación';
+        case 'invalid-credential': message = 'Correo o contraseña inválido'; break;
+        case 'invalid-email': message = 'Correo inválido'; break;
+        case 'user-not-found': message = 'Usuario no encontrado'; break;
+        case 'wrong-password': message = 'Contraseña incorrecta'; break;
+        default: message = e.message ?? 'Error de autenticación';
       }
 
-      state = AsyncError(message, StackTrace.current);
+      state = AsyncError(message, StackTrace.current); 
+
     } on SocketException catch (_) {
       if (!ref.mounted) return;
       state = AsyncError('Sin conexión a internet', StackTrace.current);
-    } catch (e, st) {
+
+    }catch (e, st) {
       if (!ref.mounted) return;
-      state = AsyncError('Error inesperado', st);
+      state = AsyncError('Error inesperado', st); 
     }
   }
 
-  Future<void> logout() async {
+  Future<void> logout() async{
     final datasources = ref.read(loginRepositorieProvider);
     await datasources.logout();
-    state = const AsyncData(null);
+    state = const AsyncData(null); 
   }
+
+
 }
+
+

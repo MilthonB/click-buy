@@ -18,26 +18,21 @@ final goRouterProvider = Provider<GoRouter>((ref) {
     initialLocation: '/home-screen',
 
     redirect: (context, state) {
-      final authState = ref.watch(loginProvider);
+      final authState = ref.read(loginProvider); // leer solo una vez
+      final user = authState.asData?.value;
 
-      return authState.when(
-        data: (user) {
-          final isLoggedIn = user != null;
-          final goingToCart = state.fullPath == '/cart';
-          final goingToLoginOrRegister =
-              state.fullPath == '/login' || state.fullPath == '/register';
+      final goingToLoginOrRegister =
+          state.fullPath == '/login' || state.fullPath == '/register';
 
-          if (!isLoggedIn) {
-            if (goingToCart) return '/home-screen';
-            return null;
-          }
-          if (isLoggedIn && goingToLoginOrRegister) return '/home-screen';
+      if (user != null && goingToLoginOrRegister) return '/home-screen';
+      if( user == null && state.fullPath == '/cart') return '/home-screen';
 
-          return null;
-        },
-        loading: () => null,
-        error: (_, __) => '/login',
-      );
+      // if (user == null &&
+      //     state.fullPath != '/login' &&
+      //     state.fullPath != '/register') {
+      //   return '/login';
+      // }
+      return null;
     },
 
     errorBuilder: (context, state) => const NotfoundScreens(),
@@ -153,3 +148,36 @@ final goRouterProvider = Provider<GoRouter>((ref) {
     ],
   );
 });
+
+
+
+    // redirect: (context, state) {
+    //   final authState = ref.watch(loginProvider);
+
+    //   return authState.when(
+    //     data: (user) {
+    //       final isLoggedIn = user != null;
+    //       final goingToCart = state.fullPath == '/cart';
+    //       final goingToLoginOrRegister =
+    //           state.fullPath == '/login' || state.fullPath == '/register';
+
+    //       if (state.fullPath == '/login' && !isLoggedIn) return '/login';
+
+    //       if (!isLoggedIn) {
+    //         if (goingToCart) return '/home-screen';
+    //         return null;
+    //       }
+    //       if (isLoggedIn && goingToLoginOrRegister) return '/home-screen';
+
+    //       return null;
+    //     },
+    //     loading: () {
+    //       final currentPath = state.fullPath;
+    //       if (currentPath != '/login' && currentPath != '/register') {
+    //         return '/login';
+    //       }
+    //       return null;
+    //     }, // aqui esta el problema
+    //     error: (_, __) => '/login',
+    //   );
+    // },

@@ -219,7 +219,7 @@ class LoginAuthScreen extends ConsumerWidget {
             ),
             TextButton(
               onPressed: () {
-                context.go('/register');
+                GoRouter.of(context).go('/register');
               },
               child: const Text(
                 "Regístrate",
