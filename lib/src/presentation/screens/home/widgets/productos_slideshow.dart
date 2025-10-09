@@ -3,6 +3,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:clickbuy/src/domain/entities/product_entity.dart';
 import 'package:clickbuy/src/presentation/provider/products/products_provider.dart';
 import 'package:clickbuy/src/presentation/widgets/sharaed/detail_product_dialog_shared.dart';
+import 'package:clickbuy/src/presentation/widgets/sharaed/error_message_shared.dart';
 import 'package:clickbuy/src/presentation/widgets/sharaed/shimmer_carrusel_shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,8 +36,12 @@ class ProductosSlideshow extends ConsumerWidget {
         );
       },
       error: (error, stackTrace) {
-        return Text('data$error');
+        return ErrorMessageShared(
+          message: error.toString(),
+          onRetry: () => ref.invalidate(getProductsCarruselProvider),
+        );
       },
+
       loading: () {
         // Supongamos que queremos mostrar 3 slides de shimmer
         return ShimmerCarruselShared();

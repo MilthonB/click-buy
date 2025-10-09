@@ -2,6 +2,7 @@ import 'package:clickbuy/src/presentation/provider/auth/login_provider.dart';
 import 'package:clickbuy/src/presentation/provider/cart/cart_provider.dart';
 import 'package:clickbuy/src/presentation/provider/products/products_provider.dart';
 import 'package:clickbuy/src/presentation/widgets/sharaed/detail_product_dialog_shared.dart';
+import 'package:clickbuy/src/presentation/widgets/sharaed/error_message_shared.dart';
 import 'package:clickbuy/src/presentation/widgets/sharaed/rating_starts_shared.dart';
 import 'package:clickbuy/src/presentation/widgets/sharaed/responsive_grid_view_shared.dart';
 import 'package:clickbuy/src/presentation/widgets/sharaed/secction_title_shared.dart';
@@ -35,7 +36,15 @@ class ProductsHome extends ConsumerWidget {
         ),
       ),
       loading: () => ShimmerProductShared(),
-      error: (_, __) => const Center(child: Text('Error al cargar productos')),
+      error: (e, str) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Center(child: ErrorMessageShared(message: e.toString(), onRetry: ()=> ref.invalidate(getProductsProvider),)),
+          ],
+        );
+      }
     );
   }
 }

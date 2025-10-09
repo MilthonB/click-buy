@@ -1,4 +1,5 @@
 import 'package:clickbuy/src/config/api/dio.dart';
+import 'package:clickbuy/src/config/helper/error_to_message.dart';
 import 'package:clickbuy/src/domain/datasources/cart_datasources.dart';
 import 'package:clickbuy/src/domain/entities/cart_entity.dart';
 import 'package:clickbuy/src/domain/entities/product_entity.dart';
@@ -13,12 +14,12 @@ class CartDatasourcesImp implements CartDatasources {
 
   // prod
   CartDatasourcesImp()
-      : _firestore = FirebaseFirestore.instance,
-        _client = DioClient();
+    : _firestore = FirebaseFirestore.instance,
+      _client = DioClient();
 
   //test
   CartDatasourcesImp.forTest(this._firestore, Dio dio)
-      : _client = DioClient.forTest(dio);
+    : _client = DioClient.forTest(dio);
 
   @override
   Future<void> addProduct({
@@ -44,9 +45,9 @@ class CartDatasourcesImp implements CartDatasources {
 
       await cartRef.set({'items': items}, SetOptions(merge: true));
     } on FirebaseException catch (e) {
-      print('Exceptions firebase');
+      throw ErrorToMessage.mapErrorMessage(e);
     } catch (e) {
-      print('Exceptions normal');
+      throw ErrorToMessage.mapErrorMessage(e);
     }
   }
 
@@ -58,24 +59,33 @@ class CartDatasourcesImp implements CartDatasources {
 
   @override
   Future<List<CartEntity>> getCartItems({required String userId}) async {
-    final cartDoc = await _firestore.collection('carts').doc(userId).get();
-    final items = cartDoc.data()?['items'] as List<dynamic>? ?? [];
+    try {
+      final cartDoc = await _firestore.collection('carts').doc(userId).get();
+      final items = cartDoc.data()?['items'] as List<dynamic>? ?? [];
 
-    List<CartEntity> cartItems = [];
+      List<CartEntity> cartItems = [];
 
-    for (var item in items) {
-      final response = await _client.dio.get('/products/${item['productId']}');
-      final data = response.data;
+      for (var item in items) {
+        final response = await _client.dio.get(
+          '/products/${item['productId']}',
+        );
+        final data = response.data;
 
+        final model = ProductsModel.json(data);
 
-      final model = ProductsModel.json(data);
+        final productEnity = ProductsMapper.productModuleToEntity(model);
 
-      final productEnity = ProductsMapper.productModuleToEntity(model);
+        cartItems.add(
+          CartEntity(product: productEnity, quantity: item['quantity']),
+        );
+      }
 
-      cartItems.add(CartEntity(product: productEnity, quantity: item['quantity']));
+      return cartItems;
+    } on FirebaseException catch (e) {
+      throw ErrorToMessage.mapErrorMessage(e);
+    } catch (e) {
+      throw ErrorToMessage.mapErrorMessage(e);
     }
-
-    return cartItems;
   }
 
   @override
@@ -89,13 +99,19 @@ class CartDatasourcesImp implements CartDatasources {
     required String userId,
     required ProductEntity product,
   }) async {
-    final cartRef = _firestore.collection('carts').doc(userId);
-    final cartDoc = await cartRef.get();
+    try {
+      final cartRef = _firestore.collection('carts').doc(userId);
+      final cartDoc = await cartRef.get();
 
-    List<dynamic> items = cartDoc.data()?['items'] ?? [];
-    items.removeWhere((item) => item['productId'] == product.id);
+      List<dynamic> items = cartDoc.data()?['items'] ?? [];
+      items.removeWhere((item) => item['productId'] == product.id);
 
-    await cartRef.set({'items': items}, SetOptions(merge: true));
+      await cartRef.set({'items': items}, SetOptions(merge: true));
+    } on FirebaseException catch (e) {
+      throw ErrorToMessage.mapErrorMessage(e);
+    } catch (e) {
+      throw ErrorToMessage.mapErrorMessage(e);
+    }
   }
 
   @override
@@ -104,30 +120,39 @@ class CartDatasourcesImp implements CartDatasources {
     required ProductEntity product,
     required int quantity,
   }) async {
-    final cartRef = _firestore.collection('carts').doc(userId);
-    final cartDoc = await cartRef.get();
+    try {
+      final cartRef = _firestore.collection('carts').doc(userId);
+      final cartDoc = await cartRef.get();
 
-    List<dynamic> items = cartDoc.data()?['items'] ?? [];
-    final index = items.indexWhere((item) => item['productId'] == product.id);
-    if (index >= 0) {
-      items[index]['quantity'] = quantity.clamp(1, product.stock);
-      await cartRef.set({'items': items}, SetOptions(merge: true));
+      List<dynamic> items = cartDoc.data()?['items'] ?? [];
+      final index = items.indexWhere((item) => item['productId'] == product.id);
+      if (index >= 0) {
+        items[index]['quantity'] = quantity.clamp(1, product.stock);
+        await cartRef.set({'items': items}, SetOptions(merge: true));
+      }
+    } on FirebaseException catch (e) {
+      throw ErrorToMessage.mapErrorMessage(e);
+    } catch (e) {
+      throw ErrorToMessage.mapErrorMessage(e);
     }
   }
 
   @override
   Future<int> getTotalItems({required String userId}) async {
-    final cartDoc = await FirebaseFirestore.instance
-        .collection('carts')
-        .doc(userId)
-        .get();
-    final items = cartDoc.data()?['items'] as List<dynamic>? ?? [];
+    try {
+      final cartDoc = await _firestore.collection('carts').doc(userId).get();
+      final items = cartDoc.data()?['items'] as List<dynamic>? ?? [];
 
-    final totalItems = items.fold<int>(
-      0,
-      (prev, item) => prev + (item['quantity'] as int),
-    );
+      final totalItems = items.fold<int>(
+        0,
+        (prev, item) => prev + (item['quantity'] as int),
+      );
 
-    return totalItems;
+      return totalItems;
+    } on FirebaseException catch (e) {
+      throw ErrorToMessage.mapErrorMessage(e);
+    } catch (e) {
+      throw ErrorToMessage.mapErrorMessage(e);
+    }
   }
 }

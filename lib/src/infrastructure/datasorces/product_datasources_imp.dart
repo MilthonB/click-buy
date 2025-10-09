@@ -1,4 +1,5 @@
 import 'package:clickbuy/src/config/api/dio.dart';
+import 'package:clickbuy/src/config/helper/error_to_message.dart';
 import 'package:clickbuy/src/domain/datasources/products_datasources.dart';
 import 'package:clickbuy/src/domain/entities/product_entity.dart';
 import 'package:clickbuy/src/infrastructure/mappers/products_mapper.dart';
@@ -24,11 +25,11 @@ class ProductDatasourcesImp implements ProductsDatasources {
 
       final productsJson = response.data['products'] as List<dynamic>;
       return mapJsonToProductEntity(productsJson);
-      
     } on DioException catch (e) {
-      rethrow;
+      throw ErrorToMessage.mapErrorMessage(e);
     } catch (e) {
-      throw Exception("Error inesperado: $e");
+      // throw ErrorToMessage.mapErrorMessage(e);
+      throw "Ocurrió un error interno. Intenta nuevamente más tarde o contacta al soporte.";
     }
   }
 
@@ -47,11 +48,10 @@ class ProductDatasourcesImp implements ProductsDatasources {
 
       final productsJson = response.data['products'] as List<dynamic>;
       return mapJsonToProductEntity(productsJson);
-
     } on DioException catch (e) {
-      rethrow;
+      throw ErrorToMessage.mapErrorMessage(e);
     } catch (e) {
-      throw Exception("Error inesperado: $e");
+      throw "Ocurrió un error interno. Intenta nuevamente más tarde o contacta al soporte.";
     }
   }
 
@@ -72,11 +72,10 @@ class ProductDatasourcesImp implements ProductsDatasources {
 
       final productsJson = response.data['products'] as List<dynamic>;
       return mapJsonToProductEntity(productsJson);
-      
     } on DioException catch (e) {
-      rethrow;
+      throw ErrorToMessage.mapErrorMessage(e);
     } catch (e) {
-      throw Exception("Error inesperado: $e");
+      throw "Ocurrió un error interno. Intenta nuevamente más tarde o contacta al soporte.";
     }
   }
 
@@ -95,18 +94,16 @@ class ProductDatasourcesImp implements ProductsDatasources {
 
       final productsJson = response.data['products'] as List<dynamic>;
       return mapJsonToProductEntity(productsJson);
-
     } on DioException catch (e) {
-      rethrow;
+      throw ErrorToMessage.mapErrorMessage(e);
     } catch (e) {
-      throw Exception("Error inesperado: $e");
+      throw "Ocurrió un error interno. Intenta nuevamente más tarde o contacta al soporte.";
     }
   }
-  
+
   @override
   Future<ProductEntity> productById({int idProduct = 1}) async {
-    
-     try {
+    try {
       final response = await _client.dio.get(
         '/products/$idProduct',
         queryParameters: {
@@ -117,18 +114,15 @@ class ProductDatasourcesImp implements ProductsDatasources {
 
       final productsJson = response.data;
       return mapJsonToProductEntity(productsJson);
-  
     } on DioException catch (e) {
-      rethrow;
+      throw ErrorToMessage.mapErrorMessage(e);
     } catch (e) {
-      throw Exception("Error inesperado: $e");
+      throw "Ocurrió un error interno. Intenta nuevamente más tarde o contacta al soporte.";
     }
   }
 
-
-  dynamic mapJsonToProductEntity(dynamic productsJson){
-
-    if(productsJson is List){
+  dynamic mapJsonToProductEntity(dynamic productsJson) {
+    if (productsJson is List) {
       final model = productsJson
           .map((json) => ProductsModel.json(json))
           .toList();
@@ -140,10 +134,8 @@ class ProductDatasourcesImp implements ProductsDatasources {
       return entity;
     }
 
-
-    final model =  ProductsModel.json(productsJson);
+    final model = ProductsModel.json(productsJson);
     final entity = ProductsMapper.productModuleToEntity(model);
-
 
     return entity;
   }
