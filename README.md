@@ -58,6 +58,21 @@ El archivo lib/firebase_option.dart no se encuentra en el respositorio por motiv
 - El **Modo prueba** expira en **30 días**, deberás actualizar las reglas después.
 - Si no ves **Authentication** o **Firestore Database**, asegúrate de estar en el proyecto correcto.
 
+# Flavors 
+
+Para usar los **3 diferentes flavor** tienes que ejecutar los siguintes comandos.
+
+```bash
+flutter run --flavor -t lib/main_dev.dart 
+flutter run --flavor -t lib/main_staging.dart 
+flutter run --flavor -t lib/main_prod.dart 
+```
+
+> ⚠️ **Ojo:**
+>
+> - En la versión **dev** está configurado el `baseUrl` de **dummyJson** correctamente.
+> - En **staging** y **prod** no, esto es intencional para dar el efecto de que realmente se está ejecutando cada flavor distinto.
+
 
 
 # ¿Por qué usaste ese patrón de estado?
