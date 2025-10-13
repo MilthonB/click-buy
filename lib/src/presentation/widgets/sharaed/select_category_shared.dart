@@ -1,13 +1,17 @@
-import 'package:clickbuy/src/presentation/provider/products/products_provider.dart';
+import 'package:clickbuy/src/presentation/bloc/cubit/products/cubit/products_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SelectCategoryShared extends ConsumerWidget {
+class SelectCategoryShared extends StatelessWidget {
   const SelectCategoryShared({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final selectedCategory = ref.watch(selectedCategoryProvider);
+  Widget build(BuildContext context) {
+    // final selectedCategory = ref.watch(selectedCategoryProvider);
+    // final selectedCategory = context.read<ProductsByCategory>().state;
+    final selectedCategory = context.select<SelectedCategory, String>(
+      (SelectedCategory value) => value.state,
+    );
 
     final categories = [
       {"name": "all", "icon": Icons.select_all},
@@ -49,13 +53,14 @@ class SelectCategoryShared extends ConsumerWidget {
               child: InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () async {
-                  ref.read(selectedCategoryProvider.notifier).setCategory(category['name'].toString());
+                  // ref.read(selectedCategoryProvider.notifier).setCategory(category['name'].toString());
+                  context.read<SelectedCategory>().setCategory(category['name'].toString());
             
                   // Cargamos productos según la categoría
                   if (category['name'] == "all") {
-                    await ref.read(getProductsProvider.notifier).getProducts();
+                    await context.read<ProductsCubit>().getProducts();
                   } else {
-                    await ref.read(productByCategoryProvider.notifier).getProductsByCategory(category['name'].toString());
+                    await context.read<ProductsCubit>().getProductsByCategory(category['name'].toString());
                   }
                 },
                 child: Padding(

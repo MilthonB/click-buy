@@ -1,21 +1,19 @@
-import 'package:clickbuy/src/presentation/bloc/cubit/auth/cubit/auth_cubit.dart';
-import 'package:clickbuy/src/presentation/bloc/cubit/auth/cubit/auth_state.dart';
-import 'package:clickbuy/src/presentation/bloc/cubit/cart/cubit/cart_cubit.dart';
 import 'package:clickbuy/src/presentation/provider/auth/login_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-class LoginAuthScreen extends StatelessWidget {
-  LoginAuthScreen({super.key});
+class RegisterAuthScreen extends ConsumerWidget {
+  RegisterAuthScreen({super.key});
 
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final register = ref.watch(registerProvider);
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -31,38 +29,40 @@ class LoginAuthScreen extends StatelessWidget {
               bool isWide = constraints.maxWidth > 700; // breakpoint
 
               if (isWide) {
-                // 💻 Tablet/Web: usar Row
+                // 💻 Tablet/Web
                 return Center(
                   child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      maxWidth: 1000,
-                    ), // límite del ancho total
+                    constraints: const BoxConstraints(maxWidth: 1000),
                     child: Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.center, // centra el contenido
+                      mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // Panel izquierdo
                         // Panel izquierdo
                         Flexible(
                           flex: 1,
                           child: Padding(
                             padding: const EdgeInsets.all(40.0),
                             child: Column(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.center, // centra vertical
-                              crossAxisAlignment: CrossAxisAlignment
-                                  .center, // centra horizontal
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisSize: MainAxisSize.min,
                               children: const [
-                                Icon(
-                                  Icons.shopping_bag_outlined,
-                                  size: 90,
-                                  color: Colors.white,
+                                CircleAvatar(
+                                  radius: 70,
+                                  backgroundColor: Colors.black12,
+                                  child: CircleAvatar(
+                                    radius: 65,
+                                    backgroundColor: Colors.black12,
+                                    child: Icon(
+                                      Icons.person_add_alt_1,
+                                      size: 90,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ),
                                 SizedBox(height: 20),
                                 Text(
-                                  "Bienvenido 👋",
+                                  "Crear cuenta",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 42,
@@ -72,7 +72,7 @@ class LoginAuthScreen extends StatelessWidget {
                                 ),
                                 SizedBox(height: 10),
                                 Text(
-                                  "Inicia sesión para continuar con tu experiencia.",
+                                  "Regístrate para comenzar tu experiencia.",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 18,
@@ -83,8 +83,7 @@ class LoginAuthScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-
-                        const SizedBox(width: 60), // espacio entre columnas
+                        const SizedBox(width: 60),
                         // Panel derecho (formulario)
                         Flexible(
                           flex: 1,
@@ -93,37 +92,7 @@ class LoginAuthScreen extends StatelessWidget {
                               constraints: const BoxConstraints(maxWidth: 400),
                               child: SingleChildScrollView(
                                 padding: const EdgeInsets.all(40.0),
-                                child: BlocConsumer<AuthCubit, AuthState>(
-                                  listener: (context, state) {
-                                    state.maybeWhen(
-                                      data: (user) {
-                                        if (Navigator.canPop(context)) Navigator.pop(context);
-                                        // cargar el carrrito?
-                                        if (user != null) context.go('/home-screen');
-                                        context.read<CartCubit>().loadCart(user!.id);
-                                      },
-                                      error: (message) {
-                                        if (Navigator.canPop(context)) Navigator.pop(context); // cerrar loader
-                                          ScaffoldMessenger.of(context).showSnackBar(
-                                            SnackBar(content: Text('Error: $message')),
-                                          );
-                                      },
-                                      loading: () {
-                                        showDialog(
-                                          context: context,
-                                          barrierDismissible: false,
-                                          builder: (_) => const Center(
-                                            child: CircularProgressIndicator(),
-                                          ),
-                                        );
-                                      },
-                                      orElse: () {},
-                                    );
-                                  },
-                                  builder: (context, state) {
-                                    return _buildForm(context);
-                                  },
-                                ),
+                                child: _buildForm(context, ref),
                               ),
                             ),
                           ),
@@ -133,40 +102,36 @@ class LoginAuthScreen extends StatelessWidget {
                   ),
                 );
               } else {
-                // 📱 Celular: usar Column (como antes)
+                // 📱 Celular
                 return Center(
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.all(24.0),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CircleAvatar(
                           radius: 70,
                           backgroundColor: Colors.black12,
                           child: CircleAvatar(
-                            backgroundColor: Colors.black12,
                             radius: 65,
-                            child: Center(
-                              child: const Icon(
-                                Icons.shopping_bag_outlined,
-                                size: 80,
-                                color: Colors.white,
-                              ),
+                            backgroundColor: Colors.black12,
+                            child: const Icon(
+                              Icons.person_add_alt_1,
+                              size: 80,
+                              color: Colors.white,
                             ),
                           ),
                         ),
                         const SizedBox(height: 20),
-                        Text(
-                          "Click Buy",
-                          style: GoogleFonts.michroma(
+                        const Text(
+                          "Crear cuenta",
+                          style: TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
                         ),
                         const SizedBox(height: 40),
-                        _buildForm(context),
+                        _buildForm(context, ref),
                       ],
                     ),
                   ),
@@ -179,43 +144,58 @@ class LoginAuthScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildForm(BuildContext context) {
+  InputDecoration _inputDecoration(String hint, IconData icon) {
+    return InputDecoration(
+      hintText: hint,
+      hintStyle: const TextStyle(color: Colors.white70),
+      prefixIcon: Icon(icon, color: Colors.white70),
+      filled: true,
+      fillColor: Colors.white10,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide.none,
+      ),
+    );
+  }
+
+  Widget _buildForm(BuildContext context, WidgetRef ref) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        // Nombre
+        TextField(
+          controller: _nameController,
+          style: const TextStyle(color: Colors.white),
+          decoration: _inputDecoration("Nombre completo", Icons.person),
+        ),
+        const SizedBox(height: 20),
+        // Email
         TextField(
           controller: _emailController,
           style: const TextStyle(color: Colors.white),
-          decoration: InputDecoration(
-            hintText: "Correo electrónico",
-            hintStyle: const TextStyle(color: Colors.white70),
-            prefixIcon: const Icon(Icons.email, color: Colors.white70),
-            filled: true,
-            fillColor: Colors.white10,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide.none,
-            ),
-          ),
+          decoration: _inputDecoration("Correo electrónico", Icons.email),
         ),
         const SizedBox(height: 20),
+        // Contraseña
         TextField(
           controller: _passwordController,
           obscureText: true,
           style: const TextStyle(color: Colors.white),
-          decoration: InputDecoration(
-            hintText: "Contraseña",
-            hintStyle: const TextStyle(color: Colors.white70),
-            prefixIcon: const Icon(Icons.lock, color: Colors.white70),
-            filled: true,
-            fillColor: Colors.white10,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide.none,
-            ),
+          decoration: _inputDecoration("Contraseña", Icons.lock),
+        ),
+        const SizedBox(height: 20),
+        // Confirmar contraseña
+        TextField(
+          controller: _confirmPasswordController,
+          obscureText: true,
+          style: const TextStyle(color: Colors.white),
+          decoration: _inputDecoration(
+            "Confirmar contraseña",
+            Icons.lock_outline,
           ),
         ),
         const SizedBox(height: 30),
+        // Botón registrar
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
@@ -228,37 +208,29 @@ class LoginAuthScreen extends StatelessWidget {
               ),
               elevation: 6,
             ),
-            onPressed: () {
-              onPressLogin(context);
-            },
-            child: Text(
-              "Iniciar sesión",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+
+            // onPressed: () {
+
+            // },
+            onPressed: () => onPressRegister(context, ref),
+            child: Text('Registrarse'),
           ),
         ),
         const SizedBox(height: 16),
-        TextButton(
-          onPressed: () {},
-          child: const Text(
-            "¿Olvidaste tu contraseña?",
-            style: TextStyle(color: Colors.white70),
-          ),
-        ),
-        const SizedBox(height: 12),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              "¿No tienes cuenta?",
+              "¿Ya tienes cuenta?",
               style: TextStyle(color: Colors.white70),
             ),
             TextButton(
               onPressed: () {
-                context.go('/register');
+                // aquí iría la navegación al login
+                context.go('/login');
               },
               child: const Text(
-                "Regístrate",
+                "Inicia sesión",
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -271,16 +243,60 @@ class LoginAuthScreen extends StatelessWidget {
     );
   }
 
-  void onPressLogin(BuildContext context) async {
+  void onPressRegister(BuildContext context, WidgetRef ref) async {
+    final name = _nameController.text.trim();
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
+    final confirmPassword = _confirmPasswordController.text.trim();
 
-    if (email.isEmpty || password.isEmpty) {
+    if (name.isEmpty || email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Por favor completa todos los campos')),
       );
       return;
     }
-    context.read<AuthCubit>().login(email: email, password: password);
+
+    if (password != confirmPassword) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Las contraseñas no coinciden')),
+      );
+      return;
+    }
+
+    showDialog(
+      context: context,
+      barrierDismissible: false, // para que no se cierre tocando afuera
+      builder: (_) => const Center(child: CircularProgressIndicator()),
+    );
+
+    final registerNotifier = ref.read(registerProvider.notifier);
+
+    await registerNotifier.signUp(email: email, password: password, name: name);
+
+    final registerState = ref.read(registerProvider);
+
+    if (Navigator.canPop(context)) Navigator.pop(context);
+
+    registerState.when(
+      data: (user) {
+        if (user != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Colors.teal,
+              content: Text(
+                'Tu registro fue exitoso ahora puedes iniciar sesion',
+              ),
+            ),
+          );
+          context.go('/login');
+        }
+      },
+      error: (error, stackTrace) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error: $error')));
+      },
+      loading: () {},
+    );
   }
 }

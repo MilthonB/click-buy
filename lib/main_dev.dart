@@ -16,5 +16,5 @@ void main() async {
     // name: 'dev',
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(ProviderScope(child: const MyApp()));
+  runApp(const MyApp());
 } 

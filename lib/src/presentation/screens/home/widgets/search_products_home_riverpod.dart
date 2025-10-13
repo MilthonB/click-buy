@@ -1,18 +1,15 @@
-import 'package:clickbuy/src/presentation/bloc/cubit/products/cubit/products_cubit.dart';
 import 'package:clickbuy/src/presentation/provider/products/products_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SearchProduuctsHome extends StatelessWidget {
+class SearchProduuctsHome extends ConsumerWidget {
   SearchProduuctsHome({super.key});
 
   final TextEditingController _controller = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
-    // ref.watch(searchProductsProvider);
-    
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(searchProductsProvider);
     // return Text('asdas');
     return SizedBox(
       width: 1200,
@@ -70,11 +67,9 @@ class SearchProduuctsHome extends StatelessWidget {
                 return;
               }
               // print(searchQuery);
-              // ref
-              //     .read(searchProductsProvider.notifier)
-              //     .searchProduct(searchQuery);
-
-              context.read<ProductsCubit>().searchProducts(searchQuery);
+              ref
+                  .read(searchProductsProvider.notifier)
+                  .searchProduct(searchQuery);
             },
             icon: Icon(Icons.search_rounded, color: Colors.white),
           ),

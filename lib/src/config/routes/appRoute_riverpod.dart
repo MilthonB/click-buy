@@ -1,5 +1,4 @@
-import 'package:clickbuy/src/presentation/bloc/cubit/auth/cubit/auth_cubit.dart';
-import 'package:clickbuy/src/presentation/bloc/cubit/auth/cubit/auth_state.dart';
+import 'package:clickbuy/src/presentation/provider/auth/login_provider.dart';
 import 'package:clickbuy/src/presentation/screens/auth/login_auth_screen.dart';
 import 'package:clickbuy/src/presentation/screens/auth/register_auth_screen.dart';
 import 'package:clickbuy/src/presentation/screens/bottom_navigation.dart';
@@ -8,42 +7,32 @@ import 'package:clickbuy/src/presentation/screens/home/home_screen.dart';
 import 'package:clickbuy/src/presentation/screens/notfound/notfound_screens.dart';
 import 'package:clickbuy/src/presentation/screens/products/products_screen.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final _sectionNavigatorKey = GlobalKey<NavigatorState>();
 
-final appRoute =  GoRouter(
+final goRouterProvider = Provider<GoRouter>((ref) {
+  return GoRouter(
     navigatorKey: _sectionNavigatorKey,
     initialLocation: '/home-screen',
 
     redirect: (context, state) {
-      // final authState = ref.watch(loginProvider);
-      final authState =  context.read<AuthCubit>().state;
+      final authState = ref.read(loginProvider); // leer solo una vez
+      final user = authState.asData?.value;
 
-      return authState.maybeWhen(
-        data: (user) {
-          final isLoggedIn = user != null;
-          final goingToCart = state.fullPath == '/cart';
-          final goingToLoginOrRegister =
-              state.fullPath == '/login' || state.fullPath == '/register';
+      final goingToLoginOrRegister =
+          state.fullPath == '/login' || state.fullPath == '/register';
 
-          // if(state.fullPath == '/register' && isLoggedIn) return '/login';
+      if (user != null && goingToLoginOrRegister) return '/home-screen';
+      if( user == null && state.fullPath == '/cart') return '/home-screen';
 
-          if (!isLoggedIn) {
-            if (goingToCart) return '/home-screen';
-            return null;
-          }
-          if (isLoggedIn && goingToLoginOrRegister) return '/home-screen';
-
-          return null;
-        },
-        error: (message) => '/login',
-        orElse: () => null,
-      );
-
-
+      // if (user == null &&
+      //     state.fullPath != '/login' &&
+      //     state.fullPath != '/register') {
+      //   return '/login';
+      // }
+      return null;
     },
 
     errorBuilder: (context, state) => const NotfoundScreens(),
@@ -158,3 +147,37 @@ final appRoute =  GoRouter(
       ),
     ],
   );
+});
+
+
+
+    // redirect: (context, state) {
+    //   final authState = ref.watch(loginProvider);
+
+    //   return authState.when(
+    //     data: (user) {
+    //       final isLoggedIn = user != null;
+    //       final goingToCart = state.fullPath == '/cart';
+    //       final goingToLoginOrRegister =
+    //           state.fullPath == '/login' || state.fullPath == '/register';
+
+    //       if (state.fullPath == '/login' && !isLoggedIn) return '/login';
+
+    //       if (!isLoggedIn) {
+    //         if (goingToCart) return '/home-screen';
+    //         return null;
+    //       }
+    //       if (isLoggedIn && goingToLoginOrRegister) return '/home-screen';
+
+    //       return null;
+    //     },
+    //     loading: () {
+    //       final currentPath = state.fullPath;
+    //       if (currentPath != '/login' && currentPath != '/register') {
+    //         return '/login';
+    //       }
+    //       return null;
+    //     }, // aqui esta el problema
+    //     error: (_, __) => '/login',
+    //   );
+    // },

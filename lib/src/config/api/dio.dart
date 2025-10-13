@@ -12,6 +12,7 @@ class DioClient {
   DioClient._internal() {
     dio = Dio(
       BaseOptions(
+        // baseUrl: 'https://dummyjson.com', 
         baseUrl: FlavorConfig.instance.baseUrl, 
         connectTimeout: const Duration(seconds: 10),
         receiveTimeout: const Duration(seconds: 10),

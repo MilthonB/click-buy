@@ -1,11 +1,8 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:clickbuy/src/domain/entities/user_entity.dart';
-import 'package:clickbuy/src/presentation/bloc/cubit/auth/cubit/auth_cubit.dart';
-import 'package:clickbuy/src/presentation/bloc/cubit/auth/cubit/auth_state.dart';
-import 'package:clickbuy/src/presentation/bloc/cubit/cart/cubit/cart_cubit.dart';
-import 'package:clickbuy/src/presentation/bloc/cubit/cart/cubit/cart_state.dart';
+import 'package:clickbuy/src/presentation/provider/auth/login_provider.dart';
+import 'package:clickbuy/src/presentation/provider/cart/cart_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -14,27 +11,32 @@ class AppbarShared extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: SizedBox(child: Appbar()));
+    
+    return SafeArea(
+      child: SizedBox(child: Appbar()),
+    );
   }
 }
 
-class Appbar extends StatelessWidget {
+class Appbar extends ConsumerWidget {
+  
   const Appbar({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // final loginConfirm = ref.watch(loginProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final loginConfirm = ref.watch(loginProvider);
 
-    return BlocBuilder<AuthCubit, AuthState>(
-      builder: (context, state) {
-        return state.maybeWhen(
-          data: (user) {
-            if (user != null) return UserLogin(dataUser: user);
-            return NoLoginAppBar();
-          },
+    return loginConfirm.when(
+      data: (user) {
+        if (user != null) return UserLogin(dataUser: user,ref: ref,);
 
-          orElse: () => SizedBox.shrink(),
-        );
+        return NoLoginAppBar();
+      },
+      error: (error, stackTrace) {
+        return Text('');
+      },
+      loading: () {
+        return Text('');
       },
     );
   }
@@ -59,9 +61,9 @@ class NoLoginAppBar extends StatelessWidget {
             ),
           ],
         ),
-
+    
         Spacer(),
-
+    
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             foregroundColor: Colors.white,
@@ -76,28 +78,35 @@ class NoLoginAppBar extends StatelessWidget {
           },
           child: Text('Iniciar sesion', style: TextStyle(fontSize: 15)),
         ),
+    
       ],
     );
   }
 }
 
-class UserLogin extends StatelessWidget {
+class UserLogin extends ConsumerWidget {
   final UserEntity dataUser;
-  const UserLogin({super.key, required this.dataUser});
+  final WidgetRef ref;
+  const UserLogin({super.key, required this.dataUser, required this.ref});
+
+
 
   @override
-  Widget build(BuildContext context) {
-    // cargar los datos de usuario
-    // context.read<CartCubit>().loadCart(dataUser.id);
-    int? lastTotalItem;
+  Widget build(BuildContext context,WidgetRef ref) {
+ 
+    // final totalItemsAsync = ref.watch(totalItemsProvider(dataUser.id));
+
+
+    final totalItems = ref.watch(cartTotalsProvider);
+
     return Row(
       children: [
         GestureDetector(
-          onTap: () => showUserDialog(context, dataUser),
+          onTap: () => showUserDialog(context, dataUser, ref),
           child: CircleAvatar(
             backgroundColor: Colors.blue,
             child: Text(
-              dataUser.name[0],
+              '${dataUser.name[0]}',
               style: TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.bold,
@@ -107,7 +116,9 @@ class UserLogin extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 5),
-
+    
+        
+    
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,7 +132,7 @@ class UserLogin extends StatelessWidget {
               ),
             ),
             Text(
-              dataUser.name,
+              '${dataUser.name}',
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
@@ -132,58 +143,36 @@ class UserLogin extends StatelessWidget {
         ),
         Spacer(),
         Row(
-          children: [
-            Icon(Icons.shopping_bag, color: Colors.blue.shade200),
-            Text(
-              'Click Buy',
-              style: GoogleFonts.michroma(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+        children: [
+          Icon(Icons.shopping_bag, color: Colors.blue.shade200),
+          Text(
+            'Click Buy',
+            style: GoogleFonts.michroma(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
-          ],
-        ),
-        SizedBox(width: 50),
+          ),
+        ],
+      ),
+        SizedBox(width: 50,),
         Spacer(),
-        BlocBuilder<CartCubit, CartState>(
-          builder: (context, state) {
-            final totalItems = state.maybeWhen(
-              data: (items, totals, quantities) {
-                lastTotalItem = totals['totalItems']?.toInt() ?? 0;
-                return lastTotalItem;
-              },
-              orElse: () => lastTotalItem ?? 0,
-            );
-            return InkWell(
-              onTap: () {
-                context.go('/cart');
-              },
-              child: Badge(
-                label: FadeInDown(
-                  key: ValueKey(totalItems),
-                  duration: const Duration(milliseconds: 400),
-                  // infinite: true,
-                  child: Text(
-                    '$totalItems',
-                    style: const TextStyle(fontSize: 12),
-                  ),
-                ),
-                child: const Icon(
-                  Icons.shopping_cart_outlined,
-                  color: Colors.black45,
-                ),
-              ),
-            );
+        InkWell(
+          onTap: () {
+            context.go('/cart');
           },
+          child: Badge(
+            label: Text('${totalItems['totalItems']}'),
+            child: Icon(Icons.shopping_cart_outlined, color: Colors.black45),
+          ),
         ),
 
-        SizedBox(width: 20),
+        SizedBox(width: 20,)
       ],
     );
   }
 }
 
-void showUserDialog(BuildContext context, UserEntity user) {
+void showUserDialog(BuildContext context, UserEntity user, WidgetRef ref) {
   showDialog(
     context: context,
     barrierDismissible: true,
@@ -197,7 +186,7 @@ void showUserDialog(BuildContext context, UserEntity user) {
             children: [
               CircleAvatar(
                 radius: 40,
-                child: Icon(Icons.exit_to_app, size: 50),
+                child: Icon(Icons.exit_to_app, size: 50,)
               ),
               const SizedBox(height: 15),
               Text(
@@ -206,7 +195,7 @@ void showUserDialog(BuildContext context, UserEntity user) {
               ),
               const SizedBox(height: 5),
               Text(
-                user.email,
+               user.email,
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
               const SizedBox(height: 20),
@@ -214,13 +203,13 @@ void showUserDialog(BuildContext context, UserEntity user) {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    // ref.read(loginProvider.notifier).logout();
 
-                    context.read<AuthCubit>().logout();
+                    ref.read(loginProvider.notifier).logout();
 
                     Navigator.pop(context); // Cierra el diálogo
 
-                    // cerrar sesion
+
+                    // cerrar sesion 
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.redAccent,
@@ -242,3 +231,6 @@ void showUserDialog(BuildContext context, UserEntity user) {
     },
   );
 }
+
+
+

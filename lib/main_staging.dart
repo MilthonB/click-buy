@@ -16,5 +16,6 @@ void main() async {
     // name: 'staging',
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(ProviderScope(child: const MyApp()));
+  // runApp(ProviderScope(child: const MyApp()));
+  runApp(const MyApp());
 } 

@@ -1,21 +1,17 @@
-import 'package:clickbuy/src/presentation/bloc/cubit/auth/cubit/auth_cubit.dart';
-import 'package:clickbuy/src/presentation/bloc/cubit/auth/cubit/auth_state.dart';
-import 'package:clickbuy/src/presentation/bloc/cubit/cart/cubit/cart_cubit.dart';
 import 'package:clickbuy/src/presentation/provider/auth/login_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginAuthScreen extends StatelessWidget {
+class LoginAuthScreen extends ConsumerWidget {
   LoginAuthScreen({super.key});
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -93,37 +89,7 @@ class LoginAuthScreen extends StatelessWidget {
                               constraints: const BoxConstraints(maxWidth: 400),
                               child: SingleChildScrollView(
                                 padding: const EdgeInsets.all(40.0),
-                                child: BlocConsumer<AuthCubit, AuthState>(
-                                  listener: (context, state) {
-                                    state.maybeWhen(
-                                      data: (user) {
-                                        if (Navigator.canPop(context)) Navigator.pop(context);
-                                        // cargar el carrrito?
-                                        if (user != null) context.go('/home-screen');
-                                        context.read<CartCubit>().loadCart(user!.id);
-                                      },
-                                      error: (message) {
-                                        if (Navigator.canPop(context)) Navigator.pop(context); // cerrar loader
-                                          ScaffoldMessenger.of(context).showSnackBar(
-                                            SnackBar(content: Text('Error: $message')),
-                                          );
-                                      },
-                                      loading: () {
-                                        showDialog(
-                                          context: context,
-                                          barrierDismissible: false,
-                                          builder: (_) => const Center(
-                                            child: CircularProgressIndicator(),
-                                          ),
-                                        );
-                                      },
-                                      orElse: () {},
-                                    );
-                                  },
-                                  builder: (context, state) {
-                                    return _buildForm(context);
-                                  },
-                                ),
+                                child: _buildForm(context, ref),
                               ),
                             ),
                           ),
@@ -166,7 +132,7 @@ class LoginAuthScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 40),
-                        _buildForm(context),
+                        _buildForm(context, ref),
                       ],
                     ),
                   ),
@@ -179,7 +145,7 @@ class LoginAuthScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildForm(BuildContext context) {
+  Widget _buildForm(BuildContext context, WidgetRef ref) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -228,9 +194,7 @@ class LoginAuthScreen extends StatelessWidget {
               ),
               elevation: 6,
             ),
-            onPressed: () {
-              onPressLogin(context);
-            },
+            onPressed: () => onPressLogin(context, ref),
             child: Text(
               "Iniciar sesión",
               style: TextStyle(fontWeight: FontWeight.bold),
@@ -255,7 +219,7 @@ class LoginAuthScreen extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                context.go('/register');
+                GoRouter.of(context).go('/register');
               },
               child: const Text(
                 "Regístrate",
@@ -271,7 +235,7 @@ class LoginAuthScreen extends StatelessWidget {
     );
   }
 
-  void onPressLogin(BuildContext context) async {
+  void onPressLogin(BuildContext context, WidgetRef ref) async {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
 
@@ -281,6 +245,41 @@ class LoginAuthScreen extends StatelessWidget {
       );
       return;
     }
-    context.read<AuthCubit>().login(email: email, password: password);
+
+    // Guarda el loginNotifier ANTES del await
+    final loginNotifier = ref.read(loginProvider.notifier);
+
+    // Mostrar cargando
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const Center(child: CircularProgressIndicator()),
+    );
+
+    // Esperar login
+    await loginNotifier.login(email: email, password: password);
+
+    // Verificar si el contexto sigue montado antes de usar Navigator o context
+    if (!context.mounted) return;
+
+    // Cerrar el diálogo de carga si sigue abierto
+    if (Navigator.canPop(context)) Navigator.pop(context);
+
+    // Ahora ya es seguro leer el estado del provider
+    final loginState = ref.read(loginProvider);
+
+    loginState.when(
+      data: (user) {
+        if (user != null) {
+          context.go('/home-screen');
+        }
+      },
+      error: (error, stackTrace) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error: $error')));
+      },
+      loading: () {},
+    );
   }
 }
