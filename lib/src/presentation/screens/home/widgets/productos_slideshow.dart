@@ -115,6 +115,7 @@ class _Slider extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
+              
               child: Image.network(
                 product.imagen,
                 fit: BoxFit.contain,

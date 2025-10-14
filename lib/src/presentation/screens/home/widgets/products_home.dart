@@ -104,14 +104,21 @@ class ProductCard extends StatelessWidget {
           children: [
             InkWell(
               onTap: () => showProductBottomSheet(context, product.id),
+
+              //Imagen 
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: Image.network(
-                  product.imagen,
-                  height: 150,
-                  width: double.infinity,
-                  fit: BoxFit.contain,
-                ),
+
+                child: FadeInImage(
+                  placeholder: AssetImage('assets/loading/loading.gif'), 
+                  image: NetworkImage(product.imagen)
+                )
+                // child: Image.network(
+                //   product.imagen,
+                //   height: 150,
+                //   width: double.infinity,
+                //   fit: BoxFit.contain,
+                // ),
               ),
             ),
             const SizedBox(height: 8),
