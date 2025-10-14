@@ -1,13 +1,9 @@
 import 'package:clickbuy/src/domain/entities/cart_entity.dart';
 import 'package:clickbuy/src/presentation/provider/auth/login_provider.dart';
 import 'package:clickbuy/src/presentation/provider/cart/cart_provider.dart';
-import 'package:clickbuy/src/presentation/widgets/sharaed/error_message_shared.dart';
-import 'package:clickbuy/src/presentation/widgets/sharaed/responsive_grid_view_shared.dart';
-import 'package:clickbuy/src/presentation/widgets/sharaed/secction_title_shared.dart';
-import 'package:clickbuy/src/presentation/widgets/sharaed/shimmer_product_shared.dart';
+import 'package:clickbuy/src/presentation/widgets/sharaed/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shimmer/shimmer.dart';
 
 class ProductCart extends ConsumerStatefulWidget {
   const ProductCart({super.key});

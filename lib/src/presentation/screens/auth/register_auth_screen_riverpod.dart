@@ -13,7 +13,7 @@ class RegisterAuthScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final register = ref.watch(registerProvider);
+    ref.watch(registerProvider);
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(

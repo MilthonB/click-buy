@@ -4,8 +4,7 @@ import 'package:clickbuy/src/presentation/bloc/cubit/cart/cubit/cart_cubit.dart'
 import 'package:clickbuy/src/presentation/screens/home/widgets/productos_slideshow.dart';
 import 'package:clickbuy/src/presentation/screens/home/widgets/products_home.dart';
 import 'package:clickbuy/src/presentation/screens/home/widgets/search_products_home.dart';
-import 'package:clickbuy/src/presentation/widgets/sharaed/appbar_shared.dart';
-import 'package:clickbuy/src/presentation/widgets/sharaed/select_category_shared.dart';
+import 'package:clickbuy/src/presentation/widgets/sharaed/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

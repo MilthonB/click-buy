@@ -1,12 +1,12 @@
 
 import 'package:clickbuy/src/presentation/bloc/cubit/auth/cubit/auth_cubit.dart';
-import 'package:clickbuy/src/presentation/bloc/cubit/auth/cubit/auth_state.dart';
+import 'package:clickbuy/src/presentation/screens/auth/widgets/shared/bloc_consumer_widget.login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-class BlocConsumerWidget extends StatelessWidget {
-  BlocConsumerWidget({super.key});
+class FormRegister extends StatelessWidget {
+  FormRegister({super.key});
 
 
   final _nameController = TextEditingController();
@@ -16,51 +16,7 @@ class BlocConsumerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthCubit, AuthState>(
-      listener: (context, state) {
-        state.maybeWhen(
-          singUp: (isRegister) {
-            if (Navigator.canPop(context)) Navigator.pop(context);
-
-            if (isRegister) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  backgroundColor: Colors.teal,
-                  content: Text(
-                    'Tu registro fue exitoso ahora puedes iniciar sesion',
-                  ),
-                ),
-              );
-              context.go('/login');
-            }
-
-            SnackBar(
-              backgroundColor: Colors.teal,
-              content: Text('Hubo problemas en el registros'),
-            );
-          },
-          loading: () {
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (_) => const Center(child: CircularProgressIndicator()),
-            );
-          },
-          error: (message) {
-            if (Navigator.canPop(context)) Navigator.pop(context);
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text('Error: $message')));
-          },
-
-          orElse: () {},
-        );
-      },
-      builder: (context, state) {
-        return _buildForm(context);
-        // return Text('data');
-      },
-    );
+    return BlocConsumerWidget(builder: (context, state) => _buildForm(context),);
   }
 
     InputDecoration _inputDecoration(String hint, IconData icon) {

@@ -220,6 +220,8 @@ void showUserDialog(BuildContext context, UserEntity user) {
 
                     Navigator.pop(context); // Cierra el diálogo
 
+                    context.go('/home-screen');
+
                     // cerrar sesion
                   },
                   style: ElevatedButton.styleFrom(

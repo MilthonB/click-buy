@@ -41,7 +41,26 @@ android {
         }
     }
 
-   
+    flavorDimensions += "environment"
+
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
+            versionNameSuffix = "-dev"
+            resValue("string", "app_name", "ClickBuy Dev")
+        }
+
+        create("staging") {
+            dimension = "environment"
+            versionNameSuffix = "-staging"
+            resValue("string", "app_name", "ClickBuy Staging")
+        }
+
+        create("prod") {
+            dimension = "environment"
+            resValue("string", "app_name", "ClickBuy")
+        }
+    }
 }
 
 flutter {

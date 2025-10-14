@@ -271,58 +271,5 @@ child:Center(
     ) ,
     );
     
-    return Center(
-      child: ElevatedButton(
-        onPressed: () {
-          // final user = ref.read(loginProvider.notifier).getUser();
-          final user = context.read<AuthCubit>().getUser();
-
-          if (user == null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                backgroundColor: Colors.red,
-                content: Text(
-                  'Para agregar productos es necesario iniciar sesión',
-                ),
-                duration: Duration(seconds: 5),
-              ),
-            );
-            return;
-          }
-
-          context.read<CartCubit>().addToCart(
-            user.id,
-            product,
-            quantity: quantity,
-          );
-          context.read<QuantityCubit>().setQuantity(
-            product.id,
-            1,
-            product.stock,
-          );
-
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: Colors.teal,
-              content: Text('Agregaste ${product.title} al carrito'),
-              duration: const Duration(seconds: 3),
-            ),
-          );
-
-          if (Navigator.canPop(context)) Navigator.pop(context);
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.orangeAccent,
-          foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-        child: const Text(
-          "Agregar",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
   }
 }

@@ -20,9 +20,9 @@ class RegisterAuthScreen extends StatelessWidget {
             builder: (context, constraints) {
               bool isWide = constraints.maxWidth > 700;
               if (isWide) {
-                return ViewTabletWeb();
+                return ViewTabletWebRegister();
               } else {
-                return ViewMobile();
+                return ViewMobileRegister();
               }
             },
           ),

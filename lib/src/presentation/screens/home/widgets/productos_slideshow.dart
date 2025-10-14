@@ -4,8 +4,7 @@ import 'package:clickbuy/src/config/helper/app_formate.dart';
 import 'package:clickbuy/src/domain/entities/product_entity.dart';
 import 'package:clickbuy/src/presentation/bloc/cubit/products/cubit/products_cubit.dart';
 import 'package:clickbuy/src/presentation/bloc/cubit/products/cubit/products_state.dart';
-import 'package:clickbuy/src/presentation/widgets/sharaed/error_message_shared.dart';
-import 'package:clickbuy/src/presentation/widgets/sharaed/shimmer_carrusel_shared.dart';
+import 'package:clickbuy/src/presentation/widgets/sharaed/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -86,7 +85,7 @@ class ProductosSlideshow extends StatelessWidget {
 
 class _Slider extends StatelessWidget {
   final ProductEntity product;
-  const _Slider({super.key, required this.product});
+  const _Slider({required this.product});
 
   @override
   Widget build(BuildContext context) {

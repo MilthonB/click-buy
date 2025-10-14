@@ -1,11 +1,8 @@
-
-import 'package:clickbuy/src/presentation/screens/auth/widgets/register/bloc_consumer_widget.register.dart';
+import 'package:clickbuy/src/presentation/screens/auth/widgets/register/form_register.dart';
 import 'package:flutter/material.dart';
 
-class ViewTabletWeb extends StatelessWidget {
-  const ViewTabletWeb({
-    super.key,
-  });
+class ViewTabletWebRegister extends StatelessWidget {
+  const ViewTabletWebRegister({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +13,7 @@ class ViewTabletWeb extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Flexible(
-              flex: 1,
-              child: _FromSection(),
-            ),
+            Flexible(flex: 1, child: _FromSection()),
             const SizedBox(width: 60),
             Flexible(
               flex: 1,
@@ -28,7 +22,7 @@ class ViewTabletWeb extends StatelessWidget {
                   constraints: const BoxConstraints(maxWidth: 400),
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.all(40.0),
-                    child: BlocConsumerWidget(),
+                    child: FormRegister(),
                   ),
                 ),
               ),
@@ -40,10 +34,8 @@ class ViewTabletWeb extends StatelessWidget {
   }
 }
 
-class ViewMobile extends StatelessWidget {
-  const ViewMobile({
-    super.key,
-  });
+class ViewMobileRegister extends StatelessWidget {
+  const ViewMobileRegister({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +43,7 @@ class ViewMobile extends StatelessWidget {
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
         child: Column(
-          children: [
-            _FromSection(),
-            SizedBox(height: 10,),
-            BlocConsumerWidget()
-          ],
+          children: [_FromSection(), SizedBox(height: 10), FormRegister()],
         ),
       ),
     );
@@ -101,15 +89,10 @@ class _FromSection extends StatelessWidget {
           Text(
             "Regístrate para comenzar tu experiencia.",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.white70,
-            ),
+            style: TextStyle(fontSize: 18, color: Colors.white70),
           ),
         ],
       ),
     );
   }
 }
-
-

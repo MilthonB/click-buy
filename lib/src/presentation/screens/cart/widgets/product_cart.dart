@@ -3,12 +3,8 @@ import 'package:clickbuy/src/domain/entities/user_entity.dart';
 import 'package:clickbuy/src/presentation/bloc/cubit/auth/cubit/auth_cubit.dart';
 import 'package:clickbuy/src/presentation/bloc/cubit/cart/cubit/cart_cubit.dart';
 import 'package:clickbuy/src/presentation/bloc/cubit/cart/cubit/cart_state.dart';
-import 'package:clickbuy/src/presentation/screens/cart/widgets/action_product_widget.cart.dart';
 import 'package:clickbuy/src/presentation/screens/cart/widgets/cards_products_widget.cart.dart';
-import 'package:clickbuy/src/presentation/widgets/sharaed/error_message_shared.dart';
-import 'package:clickbuy/src/presentation/widgets/sharaed/responsive_grid_view_shared.dart';
-import 'package:clickbuy/src/presentation/widgets/sharaed/secction_title_shared.dart';
-import 'package:clickbuy/src/presentation/widgets/sharaed/shimmer_product_shared.dart';
+import 'package:clickbuy/src/presentation/widgets/sharaed/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

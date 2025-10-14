@@ -1,8 +1,6 @@
 import 'package:clickbuy/src/presentation/bloc/cubit/products/cubit/products_cubit.dart';
-import 'package:clickbuy/src/presentation/provider/products/products_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SearchProduuctsHome extends StatelessWidget {
   SearchProduuctsHome({super.key});
