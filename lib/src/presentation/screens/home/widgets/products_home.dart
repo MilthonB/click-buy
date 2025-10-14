@@ -47,9 +47,7 @@ class ProductsHome extends StatelessWidget {
   }
 }
 
-/// -------------------------
-/// PRODUCT CARD
-/// -------------------------
+
 class ProductCard extends StatelessWidget {
   final dynamic product;
   const ProductCard({super.key, required this.product});

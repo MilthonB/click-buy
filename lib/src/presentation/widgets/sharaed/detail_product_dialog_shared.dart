@@ -2,7 +2,6 @@ import 'package:clickbuy/src/presentation/widgets/sharaed/dialog_add_product_sha
 import 'package:clickbuy/src/presentation/widgets/sharaed/quantity_buttons_shared.dart';
 import 'package:clickbuy/src/presentation/widgets/sharaed/snackbar_helper_shared.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:clickbuy/src/presentation/bloc/cubit/auth/cubit/auth_cubit.dart';
@@ -12,9 +11,7 @@ import 'package:clickbuy/src/presentation/bloc/cubit/products/cubit/products_cub
 import 'package:clickbuy/src/presentation/bloc/cubit/products/cubit/products_state.dart';
 import 'package:clickbuy/src/presentation/widgets/sharaed/rating_starts_shared.dart';
 
-// =========================================
-// 🧱  PRODUCT BOTTOM SHEET PRINCIPAL
-// =========================================
+
 
 Future<void> showProductBottomSheet(BuildContext context, int idProduct) async {
   final productCubit = context.read<ProductDetailCubit>();
@@ -41,10 +38,6 @@ Future<void> showProductBottomSheet(BuildContext context, int idProduct) async {
     },
   );
 }
-
-// =========================================
-// 🧱  CONTENIDO DEL BOTTOM SHEET
-// =========================================
 
 class ProductBottomSheetContent extends StatelessWidget {
   final dynamic product;
@@ -84,9 +77,6 @@ class ProductBottomSheetContent extends StatelessWidget {
   }
 }
 
-// =========================================
-// 🧱  SECCIÓN DE AGREGAR AL CARRITO
-// =========================================
 
 class _AddToCartSection extends StatelessWidget {
   final dynamic product;
@@ -141,10 +131,6 @@ class _AddToCartSection extends StatelessWidget {
   }
 }
 
-// =========================================
-// 🧱  IMAGEN CON DESCUENTO
-// =========================================
-
 class _ProductImageDiscount extends StatelessWidget {
   final dynamic product;
   const _ProductImageDiscount({required this.product});
@@ -186,10 +172,6 @@ class _ProductImageDiscount extends StatelessWidget {
   }
 }
 
-// =========================================
-// 🧱  TÍTULO Y PRECIO
-// =========================================
-
 class _ProductTitlePrice extends StatelessWidget {
   final dynamic product;
   const _ProductTitlePrice({required this.product});
@@ -217,16 +199,6 @@ class _ProductTitlePrice extends StatelessWidget {
     );
   }
 }
-
-// =========================================
-// 🧱  DIALOG DE CARGA
-// =========================================
-
-
-// =========================================
-// 🧱  SNACKBAR HELPER
-// =========================================
-
 
 
 
