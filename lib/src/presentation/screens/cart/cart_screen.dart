@@ -94,7 +94,7 @@ class ContainerPayInfo extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      " ${totals['totalItems']} Artículos",
+                      "${totals['totalItems']} Artículos",
                       style: const TextStyle(fontSize: 16),
                     ),
 

@@ -1,3 +1,6 @@
+import 'package:clickbuy/src/config/helper/env.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 enum Flavor { dev, staging, prod }
 
 class FlavorConfig {
@@ -37,25 +40,26 @@ class FlavorConfig {
   static bool isProd() => instance.flavor == Flavor.prod;
 
   static void setupFlavor(Flavor flavor) {
+
     switch (flavor) {
       case Flavor.dev:
         FlavorConfig(
           flavor: flavor,
-          baseUrl: 'https://dummyjson.com', // esta estoy usando actalmente
+          baseUrl: Env.baseUrlDev, // esta estoy usando actalmente
           name: 'Development',
         );
         break;
       case Flavor.staging:
         FlavorConfig(
           flavor: flavor,
-          baseUrl: 'https://api-staging.example.com', // ejemplo: aqui ira otra api de staging
+          baseUrl: Env.baseUrlStaging, // ejemplo: aqui ira otra api de staging
           name: 'Staging',
         );
         break;
       case Flavor.prod:
         FlavorConfig(
           flavor: flavor,
-          baseUrl: 'https://api.example.com', // ejemplo: aqui ira otra api de prod
+          baseUrl: Env.baseUrlProd, // ejemplo: aqui ira otra api de prod
           name: 'Production',
         );
         break;

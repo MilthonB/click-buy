@@ -41,27 +41,7 @@ android {
         }
     }
 
-    flavorDimensions "enviroment"
-
-    productFlavors {
-        dev {
-            dimension "environment"
-            applicationIdSuffix ".dev"
-            versionNameSuffix "-dev"
-            resValue "string", "app_name", "ClickBuy Dev"
-        }
-        staging {
-            dimension "environment"
-            applicationIdSuffix ".staging"
-            versionNameSuffix "-staging"
-             resValue "string", "app_name", "ClickBuy Staging"
-        }
-        prod {
-            dimension "environment"
-            resValue "string", "app_name", "ClickBuy"
-            // sin suffix, para la versión de producción
-        }
-    }
+   
 }
 
 flutter {

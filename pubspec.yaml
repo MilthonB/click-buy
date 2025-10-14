@@ -1,5 +1,7 @@
 name: clickbuy
-description: "ClickBuy es una aplicación web mCommerce en Flutter, con autenticación de usuarios usando Firebase, listado de productos desde una API externa y carrito de compras persistente."
+description: "ClickBuy es una aplicación web mCommerce en Flutter, con
+  autenticación de usuarios usando Firebase, listado de productos desde una API
+  externa y carrito de compras persistente."
 publish_to: "none"
 version: 0.1.0
 
@@ -36,10 +38,9 @@ dev_dependencies:
   json_serializable: ^6.11.1
   mocktail: ^1.0.4
   riverpod_generator: ^3.0.0
-  # riverpod_test: eliminar, no es compatible con Riverpod 3
-
 
 flutter:
   uses-material-design: true
   assets:
     - assets/notfound/
+

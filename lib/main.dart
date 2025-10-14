@@ -30,6 +30,7 @@
 
 
 import 'package:clickbuy/firebase_options.dart';
+import 'package:clickbuy/flavors/flavor_config.dart';
 import 'package:clickbuy/src/config/routes/appRoute.dart';
 import 'package:clickbuy/src/config/theme/theme.dart';
 import 'package:clickbuy/src/infrastructure/datasorces/product_datasources_imp.dart';
@@ -47,6 +48,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  FlavorConfig.setupFlavor(Flavor.dev);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -62,6 +64,8 @@ class MyApp extends StatelessWidget {
     final loginRepository = LoginRepositorieImp(LoginDatasourcesImp());
     final cartRepository = CartRepositorieImp(CartDatasourcesImp());
     final productRepository = ProductRepositorieImp(ProductDatasourcesImp());
+
+    
 
     return MultiBlocProvider(
       providers: [

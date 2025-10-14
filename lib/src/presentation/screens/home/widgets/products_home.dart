@@ -23,7 +23,9 @@ class ProductsHome extends StatelessWidget {
       builder: (context, state) {
         return state.maybeWhen(
           loading: () => ShimmerProductShared(),
-          loaded: (products) => Padding(
+          loaded: (products){
+            
+            return Padding(
             padding: const EdgeInsets.all(15.0),
             child: Column(
               children: [
@@ -32,12 +34,17 @@ class ProductsHome extends StatelessWidget {
                   items: products,
                   columnWidth: 200,
                   mainAxisExtent: 530,
-                  itemBuilder: (context, index) => ProductCard(product: products[index]),
+                  itemBuilder: (context, index){
+                    return ProductCard(product: products[index]);
+                  },
                 ),
               ],
             ),
-          ),
-          error: (message) => ErrorMessageShared(message: message),
+          );
+          },
+          error: (message) {
+            return ErrorMessageShared(message: message);
+          },
           orElse: () => const SizedBox.shrink(),
         );
       },
@@ -53,6 +60,8 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    
     final quantity = context.watch<QuantityCubit>().getQuantity(product.id);
 
     void handleAddToCart() {
@@ -132,8 +141,8 @@ class ProductCard extends StatelessWidget {
             const SizedBox(height: 4),
             Text(product.description, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.white70)),
             const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Wrap(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 QuantityButton(product: product, quantity: quantity),
                 ElevatedButton(

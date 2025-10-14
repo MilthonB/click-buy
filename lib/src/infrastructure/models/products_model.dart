@@ -31,13 +31,14 @@ class ProductsModel {
 
   factory ProductsModel.json(Map<String, dynamic> json) {
     final tags = List<String>.from(json['tags'] ?? []);
+    
     return ProductsModel(
     id: json['id'],
     title: json['title'],
     description: json['description'],
-    price: json['price'],
-    discountPercentage: json['discountPercentage'],
-    rating: json['rating'],
+    price: (json['price'] as num).toDouble(),
+    discountPercentage: (json['discountPercentage'] as num).toDouble(),
+    rating: (json['rating'] as num).toDouble(),
     stock: json['stock'],
     tags: tags,
     sku: json['sku'],

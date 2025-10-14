@@ -10,6 +10,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
 
+
+
   FlavorConfig.setupFlavor(Flavor.prod);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(

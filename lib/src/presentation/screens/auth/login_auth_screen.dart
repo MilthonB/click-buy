@@ -98,7 +98,7 @@ class LoginAuthScreen extends StatelessWidget {
                                     state.maybeWhen(
                                       data: (user) {
                                         if (Navigator.canPop(context)) Navigator.pop(context);
-                                        // cargar el carrrito?
+
                                         if (user != null) context.go('/home-screen');
                                         context.read<CartCubit>().loadCart(user!.id);
                                       },
@@ -166,7 +166,37 @@ class LoginAuthScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 40),
-                        _buildForm(context),
+                        BlocConsumer<AuthCubit, AuthState>(
+                                  listener: (context, state) {
+                                    state.maybeWhen(
+                                      data: (user) {
+                                        if (Navigator.canPop(context)) Navigator.pop(context);
+
+                                        if (user != null) context.go('/home-screen');
+                                        context.read<CartCubit>().loadCart(user!.id);
+                                      },
+                                      error: (message) {
+                                        if (Navigator.canPop(context)) Navigator.pop(context); // cerrar loader
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            SnackBar(content: Text('Error: $message')),
+                                          );
+                                      },
+                                      loading: () {
+                                        showDialog(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder: (_) => const Center(
+                                            child: CircularProgressIndicator(),
+                                          ),
+                                        );
+                                      },
+                                      orElse: () {},
+                                    );
+                                  },
+                                  builder: (context, state) {
+                                    return _buildForm(context);
+                                  },
+                                ),
                       ],
                     ),
                   ),

@@ -1,4 +1,5 @@
 import 'package:clickbuy/flavors/flavor_config.dart';
+import 'package:clickbuy/src/config/helper/env.dart';
 import 'package:clickbuy/src/config/helper/error_to_message.dart';
 import 'package:dio/dio.dart';
 
@@ -9,11 +10,15 @@ class DioClient {
 
   late final Dio dio;
 
+  // final baseURL = dotenv.env['BASE_URL'];
+  final baseURL = Env.baseUrl;
+
   DioClient._internal() {
     dio = Dio(
       BaseOptions(
-        // baseUrl: 'https://dummyjson.com', 
         baseUrl: FlavorConfig.instance.baseUrl, 
+        // baseUrl: 'https://dummyjson.com', 
+        // baseUrl: FlavorConfig.instance.baseUrl, 
         connectTimeout: const Duration(seconds: 10),
         receiveTimeout: const Duration(seconds: 10),
         headers: {

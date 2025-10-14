@@ -72,7 +72,7 @@ class _GridProducts extends StatelessWidget {
           ResponsiveGridView(
             items: cartData,
             columnWidth: 200,
-            mainAxisExtent: 430,
+            mainAxisExtent: 470,
             itemBuilder: (context, index) {
               final cart = cartData[index];
               final subtotal =
