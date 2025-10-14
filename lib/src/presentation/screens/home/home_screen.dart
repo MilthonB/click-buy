@@ -1,4 +1,3 @@
-
 import 'package:clickbuy/src/presentation/bloc/cubit/auth/cubit/auth_cubit.dart';
 import 'package:clickbuy/src/presentation/bloc/cubit/cart/cubit/cart_cubit.dart';
 import 'package:clickbuy/src/presentation/screens/home/widgets/productos_slideshow.dart';
@@ -15,9 +14,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // Cargar carrito
     final user = context.read<AuthCubit>().getUser();
-    if(user != null ){
-    context.read<CartCubit>().loadCart(user.id);
-
+    if (user != null) {
+      context.read<CartCubit>().loadCart(user.id);
     }
 
     return CustomScrollView(

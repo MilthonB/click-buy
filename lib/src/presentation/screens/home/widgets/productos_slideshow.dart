@@ -13,11 +13,6 @@ class ProductosSlideshow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final products = ref.watch(getProductsCarruselProvider);
-
-
-  
-
     return BlocBuilder<ProductsCarruselCubit, ProductsState>(
       builder: (context, state) {
         return state.maybeWhen(
@@ -47,39 +42,6 @@ class ProductosSlideshow extends StatelessWidget {
         );
       },
     );
-
-    // return products.when(
-    //   data: (product) {
-    //     return SizedBox(
-    //       width: 1200,
-    //       child: SizedBox(
-    //         height: 210,
-    //         width: double.infinity,
-    //         child: Swiper(
-    //           viewportFraction: 0.8,
-    //           scale: 0.9,
-    //           itemCount: product.length,
-    //           autoplay: true,
-    //           itemBuilder: (context, index) {
-    //             return _Slider(product: product[index]);
-    //           },
-    //         ),
-    //       ),
-    //     );
-    //   },
-    //   error: (error, stackTrace) {
-    //     return Center(
-    //       child: Text(
-    //         '${MessageError.mapErrorMessage(error)}',
-    //         style: TextStyle(fontSize: 16, color: Colors.black87, height: 1.4),
-    //       ),
-    //     );
-    //   },
-    //   loading: () {
-    //     // Supongamos que queremos mostrar 3 slides de shimmer
-    //     return ShimmerCarruselShared();
-    //   },
-    // );
   }
 }
 
@@ -89,13 +51,6 @@ class _Slider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final decorator = BoxDecoration(
-    //   borderRadius: BorderRadius.circular(20),
-    //   boxShadow: const [
-    //     BoxShadow(color: Colors.black45, blurRadius: 10, offset: Offset(0, 10)),
-    //   ],
-    // );
-
     return Padding(
       padding: const EdgeInsets.only(bottom: 30),
       child: DecoratedBox(

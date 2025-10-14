@@ -1,3 +1,4 @@
+import 'package:clickbuy/src/config/helper/error_to_message.dart';
 import 'package:clickbuy/src/infrastructure/mappers/user_mapper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:clickbuy/src/domain/datasources/login_datasources.dart';
@@ -31,7 +32,7 @@ class LoginDatasourcesImp implements LoginDatasources {
 
       return UserMapper.productModuleToEntity(user);
     } on FirebaseAuthException catch (e) {
-      throw e;
+      throw ErrorToMessage.mapErrorMessage(e);
     }
   }
 
@@ -63,7 +64,7 @@ class LoginDatasourcesImp implements LoginDatasources {
       return UserMapper.productModuleToEntity(user);
 
     } on FirebaseAuthException catch (e) {
-      throw e;
+      throw ErrorToMessage.mapErrorMessage(e);
     }
   }
 
