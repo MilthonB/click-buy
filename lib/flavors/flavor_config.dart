@@ -1,5 +1,4 @@
 import 'package:clickbuy/src/config/helper/env.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 enum Flavor { dev, staging, prod }
 
