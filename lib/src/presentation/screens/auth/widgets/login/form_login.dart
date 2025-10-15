@@ -1,5 +1,7 @@
 import 'package:clickbuy/src/presentation/bloc/cubit/auth/cubit/auth_cubit.dart';
 import 'package:clickbuy/src/presentation/screens/auth/widgets/shared/bloc_consumer_widget.login.dart';
+import 'package:clickbuy/src/presentation/widgets/sharaed/snackbar_helper_shared.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -23,7 +25,7 @@ class FormLogin extends StatelessWidget {
           controller: _emailController,
           style: const TextStyle(color: Colors.white),
           decoration: InputDecoration(
-            hintText: "Correo electrónico",
+            hintText: "auth.email_hint".tr(),
             hintStyle: const TextStyle(color: Colors.white70),
             prefixIcon: const Icon(Icons.email, color: Colors.white70),
             filled: true,
@@ -40,7 +42,7 @@ class FormLogin extends StatelessWidget {
           obscureText: true,
           style: const TextStyle(color: Colors.white),
           decoration: InputDecoration(
-            hintText: "Contraseña",
+            hintText: "auth.password_hint".tr(),
             hintStyle: const TextStyle(color: Colors.white70),
             prefixIcon: const Icon(Icons.lock, color: Colors.white70),
             filled: true,
@@ -68,7 +70,7 @@ class FormLogin extends StatelessWidget {
               onPressLogin(context);
             },
             child: Text(
-              "Iniciar sesión",
+              "auth.login_button".tr(),
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
@@ -76,8 +78,8 @@ class FormLogin extends StatelessWidget {
         const SizedBox(height: 16),
         TextButton(
           onPressed: () {},
-          child: const Text(
-            "¿Olvidaste tu contraseña?",
+          child: Text(
+            "auth.forgot_password".tr(),
             style: TextStyle(color: Colors.white70),
           ),
         ),
@@ -85,16 +87,16 @@ class FormLogin extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              "¿No tienes cuenta?",
+            Text(
+              "auth.no_account".tr(),
               style: TextStyle(color: Colors.white70),
             ),
             TextButton(
               onPressed: () {
                 context.go('/register');
               },
-              child: const Text(
-                "Regístrate",
+              child: Text(
+                "auth.register_button".tr(),
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -112,9 +114,7 @@ class FormLogin extends StatelessWidget {
     final password = _passwordController.text.trim();
 
     if (email.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Por favor completa todos los campos')),
-      );
+      SnackbarHelper.error(context, 'auth.empty_fields_warning'.tr());
       return;
     }
     context.read<AuthCubit>().login(email: email, password: password);

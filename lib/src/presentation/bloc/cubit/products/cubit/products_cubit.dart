@@ -4,29 +4,51 @@ import 'package:clickbuy/src/domain/repositories/product_respositorie.dart';
 
 import 'products_state.dart';  // Importar el state generado por Freezed
 
-class ProductsCubit extends Cubit<ProductsState> {
 
+class ProductsCubit extends Cubit<ProductsState> {
   final ProductRespositorie _repository;
+
   ProductsCubit(this._repository) : super(ProductsState.initial());
 
+  int _skip = 0;
+
+  // Carga inicial de productos
   Future<void> getProducts() async {
     emit(ProductsState.loading());
     try {
-      final products = await _repository.products();
-      if(isClosed) return;
+      final products = await _repository.products(skip: 0);
+      _skip = products.length;
       emit(ProductsState.loaded(products));
     } catch (e) {
       emit(ProductsState.error(e.toString()));
     }
   }
 
+
+
+  Future<void> loadMoreProducts() async {
+    try {
+      state.maybeWhen(
+        loaded: (existingProducts) async {
+          final newProducts = await _repository.products( skip: _skip);
+
+          if (newProducts.isNotEmpty) {
+            _skip += newProducts.length;
+            emit(ProductsState.loaded([...existingProducts, ...newProducts]));
+          }
+        },
+        orElse: () {},
+      );
+    } catch (e) {
+      emit(ProductsState.error(e.toString()));
+    }
+  }
+
+  // Métodos existentes que tienes
   Future<void> getProductsByCategory(String categoryName) async {
     emit(ProductsState.loading());
     try {
-      final products = await _repository.producsByCategoryName(
-        categoryName: categoryName,
-      );
-      if(isClosed) return;
+      final products = await _repository.producsByCategoryName(categoryName: categoryName);
       emit(ProductsState.loaded(products));
     } catch (e) {
       emit(ProductsState.error(e.toString()));
@@ -63,6 +85,7 @@ class ProductsCubit extends Cubit<ProductsState> {
     }
   }
 }
+
 
 
 

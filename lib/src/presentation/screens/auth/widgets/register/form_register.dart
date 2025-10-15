@@ -1,6 +1,8 @@
 
 import 'package:clickbuy/src/presentation/bloc/cubit/auth/cubit/auth_cubit.dart';
 import 'package:clickbuy/src/presentation/screens/auth/widgets/shared/bloc_consumer_widget.login.dart';
+import 'package:clickbuy/src/presentation/widgets/sharaed/snackbar_helper_shared.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -41,14 +43,14 @@ class FormRegister extends StatelessWidget {
         TextField(
           controller: _nameController,
           style: const TextStyle(color: Colors.white),
-          decoration: _inputDecoration("Nombre completo", Icons.person),
+          decoration: _inputDecoration("auth.full_name".tr(), Icons.person),
         ),
         const SizedBox(height: 20),
         // Email
         TextField(
           controller: _emailController,
           style: const TextStyle(color: Colors.white),
-          decoration: _inputDecoration("Correo electrónico", Icons.email),
+          decoration: _inputDecoration("auth.email_hint".tr(), Icons.email),
         ),
         const SizedBox(height: 20),
         // Contraseña
@@ -56,7 +58,7 @@ class FormRegister extends StatelessWidget {
           controller: _passwordController,
           obscureText: true,
           style: const TextStyle(color: Colors.white),
-          decoration: _inputDecoration("Contraseña", Icons.lock),
+          decoration: _inputDecoration("auth.password_hint".tr(), Icons.lock),
         ),
         const SizedBox(height: 20),
         // Confirmar contraseña
@@ -65,7 +67,7 @@ class FormRegister extends StatelessWidget {
           obscureText: true,
           style: const TextStyle(color: Colors.white),
           decoration: _inputDecoration(
-            "Confirmar contraseña",
+            "auth.confirm_password".tr(),
             Icons.lock_outline,
           ),
         ),
@@ -84,15 +86,15 @@ class FormRegister extends StatelessWidget {
               elevation: 6,
             ),
             onPressed: () => onPressRegister(context),
-            child: Text('Registrarse'),
+            child: Text('auth.register_button'.tr()),
           ),
         ),
         const SizedBox(height: 16),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              "¿Ya tienes cuenta?",
+            Text(
+              "auth.already_have_account".tr(),
               style: TextStyle(color: Colors.white70),
             ),
             TextButton(
@@ -100,8 +102,8 @@ class FormRegister extends StatelessWidget {
                 // aquí iría la navegación al login
                 context.go('/login');
               },
-              child: const Text(
-                "Inicia sesión",
+              child: Text(
+                "auth.go_login".tr(),
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -122,16 +124,12 @@ class FormRegister extends StatelessWidget {
     final confirmPassword = _confirmPasswordController.text.trim();
 
     if (name.isEmpty || email.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Por favor completa todos los campos')),
-      );
+      SnackbarHelper.error(context, 'auth.fill_all_fields'.tr());
       return;
     }
 
     if (password != confirmPassword) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Las contraseñas no coinciden')),
-      );
+      SnackbarHelper.error(context, 'auth.passwords_do_not_match'.tr());
       return;
     }
 

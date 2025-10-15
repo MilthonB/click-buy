@@ -1,4 +1,5 @@
 import 'package:clickbuy/src/presentation/screens/auth/widgets/login/form_login.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -52,11 +53,11 @@ class _HeaderAuth extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center, // centra vertical
         crossAxisAlignment: CrossAxisAlignment.center, // centra horizontal
         mainAxisSize: MainAxisSize.min,
-        children: const [
+        children: [
           Icon(Icons.shopping_bag_outlined, size: 90, color: Colors.white),
           SizedBox(height: 20),
           Text(
-            "Bienvenido 👋",
+            'auth.welcome_title'.tr(),
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 42,
@@ -66,7 +67,7 @@ class _HeaderAuth extends StatelessWidget {
           ),
           SizedBox(height: 10),
           Text(
-            "Inicia sesión para continuar con tu experiencia.",
+            "auth.welcome_message".tr(),
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 18, color: Colors.white70),
           ),

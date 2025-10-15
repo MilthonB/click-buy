@@ -1,4 +1,5 @@
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -72,7 +73,6 @@ class _CustomBottomNavigationState extends State<_CustomBottomNavigation> {
       unselectedItemColor: Colors.black54,
       elevation: 10,
       onTap: (value) {
-        print(value);
         return _goBranch(value);
       },
       items: [
@@ -81,12 +81,12 @@ class _CustomBottomNavigationState extends State<_CustomBottomNavigation> {
         BottomNavigationBarItem(
         icon: _NavigationBarHomeActiveOrInActive(
           icon: Icon(Icons.home),
-          sectionName: 'Home',
+          sectionName: 'nav.home'.tr(),
         ),
-        label: 'Home',
+        label: 'nav.home'.tr(),
         activeIcon: _NavigationBarHomeActiveOrInActive(
           icon: Icon(Icons.home_outlined, color: Colors.white,),
-          sectionName: 'Home',
+          sectionName: 'nav.home'.tr(),
           isActive: true,
         )),
 
@@ -94,13 +94,13 @@ class _CustomBottomNavigationState extends State<_CustomBottomNavigation> {
         BottomNavigationBarItem(
         icon: _NavigationBarHomeActiveOrInActive(
           icon: Icon(Icons.shopping_bag),
-          sectionName: 'Productos',
+          sectionName: 'nav.products'.tr(),
          
         ),
-        label: 'Productos',
+        label: 'nav.products'.tr(),
         activeIcon: _NavigationBarHomeActiveOrInActive(
           icon: Icon(Icons.shopping_bag_outlined, color: Colors.white,),
-          sectionName: 'Productos',
+          sectionName: 'nav.products'.tr(),
           isActive: true,
         )),
 
@@ -108,12 +108,12 @@ class _CustomBottomNavigationState extends State<_CustomBottomNavigation> {
         BottomNavigationBarItem(
         icon: _NavigationBarHomeActiveOrInActive(
           icon: Icon(Icons.shopping_cart),
-          sectionName: 'Carrito',
+          sectionName: 'nav.cart'.tr(),
         ),
-        label: 'Carrito',
+        label: 'nav.cart'.tr(),
         activeIcon: _NavigationBarHomeActiveOrInActive(
           icon: Icon(Icons.shopping_cart_outlined, color: Colors.white,),
-          sectionName: 'Carrito',
+          sectionName: 'nav.cart'.tr(),
           isActive: true,
         )),
       ],

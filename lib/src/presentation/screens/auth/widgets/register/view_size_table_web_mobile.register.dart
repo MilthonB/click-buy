@@ -1,4 +1,5 @@
 import 'package:clickbuy/src/presentation/screens/auth/widgets/register/form_register.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ViewTabletWebRegister extends StatelessWidget {
@@ -61,7 +62,7 @@ class _FromSection extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
-        children: const [
+        children:  [
           CircleAvatar(
             radius: 70,
             backgroundColor: Colors.black12,
@@ -77,7 +78,7 @@ class _FromSection extends StatelessWidget {
           ),
           SizedBox(height: 20),
           Text(
-            "Crear cuenta",
+            "auth.register_title".tr(),
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 42,
@@ -87,7 +88,7 @@ class _FromSection extends StatelessWidget {
           ),
           SizedBox(height: 10),
           Text(
-            "Regístrate para comenzar tu experiencia.",
+            "auth.register_welcome".tr(),
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 18, color: Colors.white70),
           ),

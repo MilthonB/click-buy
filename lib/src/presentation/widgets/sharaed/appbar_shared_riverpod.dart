@@ -1,6 +1,7 @@
 import 'package:clickbuy/src/domain/entities/user_entity.dart';
 import 'package:clickbuy/src/presentation/provider/auth/login_provider.dart';
 import 'package:clickbuy/src/presentation/provider/cart/cart_provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -76,7 +77,7 @@ class NoLoginAppBar extends StatelessWidget {
             context.go('/login');
             // showProductBottomSheet(context);
           },
-          child: Text('Iniciar sesion', style: TextStyle(fontSize: 15)),
+          child: Text('login_button'.tr(), style: TextStyle(fontSize: 15)),
         ),
     
       ],
@@ -124,7 +125,7 @@ class UserLogin extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Bienvenido de nuevo',
+              'welcome_back'.tr(),
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
@@ -190,7 +191,8 @@ void showUserDialog(BuildContext context, UserEntity user, WidgetRef ref) {
               ),
               const SizedBox(height: 15),
               Text(
-                "Nombre: ${user.name} ",
+                // "Nombre: ${user.name} ",
+                "name_label".tr(),
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 5),

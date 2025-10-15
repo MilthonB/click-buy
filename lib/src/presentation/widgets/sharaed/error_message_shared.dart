@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ErrorMessageShared extends StatelessWidget {
@@ -23,7 +24,7 @@ class ErrorMessageShared extends StatelessWidget {
                 Icon(Icons.error_outline, color: Colors.redAccent, size: 60),
                 const SizedBox(height: 12),
                 Text(
-                  'Ups... algo salió mal 😔',
+                  'error_message.title'.tr(),
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -41,7 +42,7 @@ class ErrorMessageShared extends StatelessWidget {
                   ElevatedButton.icon(
                     onPressed: onRetry,
                     icon: const Icon(Icons.refresh),
-                    label: const Text('Reintentar'),
+                    label: Text('retry_button'.tr()),
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.redAccent,

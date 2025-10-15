@@ -4,6 +4,7 @@ import 'package:clickbuy/src/presentation/bloc/cubit/auth/cubit/auth_cubit.dart'
 import 'package:clickbuy/src/presentation/bloc/cubit/auth/cubit/auth_state.dart';
 import 'package:clickbuy/src/presentation/bloc/cubit/cart/cubit/cart_cubit.dart';
 import 'package:clickbuy/src/presentation/bloc/cubit/cart/cubit/cart_state.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -74,7 +75,7 @@ class NoLoginAppBar extends StatelessWidget {
             context.go('/login');
             // showProductBottomSheet(context);
           },
-          child: Text('Iniciar sesion', style: TextStyle(fontSize: 15)),
+          child: Text('auth.login_button'.tr(), style: TextStyle(fontSize: 15)),
         ),
       ],
     );
@@ -113,7 +114,7 @@ class UserLogin extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Bienvenido de nuevo',
+              'profile.welcome_back'.tr(),
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
@@ -201,7 +202,7 @@ void showUserDialog(BuildContext context, UserEntity user) {
               ),
               const SizedBox(height: 15),
               Text(
-                "Nombre: ${user.name} ",
+                "profile.name_label".tr(args: [user.name]),
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 5),
@@ -231,8 +232,8 @@ void showUserDialog(BuildContext context, UserEntity user) {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  child: const Text(
-                    "Cerrar sesión",
+                  child: Text(
+                    "profile.logout_button".tr(),
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),

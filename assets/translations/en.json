@@ -1,0 +1,105 @@
+{
+  "_comment_login_section": "Login screen texts",
+  
+  "auth": {
+    "app_name": "Click Buy",
+    "welcome_title": "Welcome 👋",
+    "welcome_message": "Log in to continue your experience.",
+    "email_hint": "Email address",
+    "password_hint": "Password",
+    "login_button": "Log in",
+    "forgot_password": "Forgot your password?",
+    "no_account": "Don't have an account?",
+    "register_button": "Sign up",
+    "empty_fields_warning": "Please complete all fields",
+    "fill_all_fields": "Please complete all fields",
+    "passwords_do_not_match": "Passwords do not match",
+
+    "register_title": "Create account",
+    "register_welcome": "Register to start your experience.",
+    "full_name": "Full name",
+    "confirm_password": "Confirm password",
+    "already_have_account": "Already have an account?",
+    "go_login": "Login",
+    "register_success": "Registration successful 🎉",
+    "register_error": "Error during registration, please try again"
+  },
+
+  "cart": {
+    "login_required_to_add": "You need to log in to add products",
+    "added_to_cart": "You added {product} to the cart",
+    "error_adding_product": "An error occurred while adding the product",
+    "add_button": "Add",
+    "items_label": "{count} Items",
+    "pay_button": "Pay"
+  },
+
+  "products": {
+    "section_products": "Products",
+    "search_products_hint": "Search products...",
+     "stock": "Stock: {quantity} units",
+    "description_label": "Description:",
+    "add_to_cart_button": "Add",
+    "login_required": "You must log in to add products",
+    "added_to_cart": "You added {product} x {quantity} to the cart"
+  },
+
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "cart": "Cart"
+  },
+
+  "profile": {
+    "welcome_back": "Welcome back",
+    "name_label": "Name",
+    "logout_button": "Log out"
+  },
+
+
+  "loading": {
+    "adding_to_cart": "Adding to cart..."
+  },
+
+  "error_message": {
+    "title": "Oops... something went wrong 😔",
+    "retry_button": "Retry",
+    "network_timeout": "Connection timed out. Check your internet.",
+    "network_connection": "Connection error. Check your internet.",
+    "request_cancelled": "The request was cancelled.",
+    "unexpected_server": "Unexpected server error ({0}).",
+    "user_not_found": "User not found.",
+    "wrong_password": "Wrong password.",
+    "email_already_in_use": "Email is already registered.",
+    "invalid_email": "Invalid email.",
+    "weak_password": "Password is too weak.",
+    "user_disabled": "Account has been disabled.",
+    "operation_not_allowed": "Operation not allowed. Contact administrator.",
+    "account_exists_with_different_credential": "An account exists with different credentials.",
+    "invalid_credential": "Invalid credential. Try logging in again.",
+    "invalid_verification_code": "Invalid verification code.",
+    "invalid_verification_id": "Invalid verification ID.",
+    "network_request_failed": "Firebase connection issue.",
+    "too_many_requests": "Too many attempts. Try again later.",
+    "permission_denied": "You do not have permission to perform this action.",
+    "document_not_found": "Document not found.",
+    "document_already_exists": "Document already exists.",
+    "resource_exhausted": "Resource exhausted.",
+    "deadline_exceeded": "Deadline exceeded.",
+    "operation_aborted": "Operation was aborted.",
+    "out_of_range": "Value out of range.",
+    "unimplemented": "Operation not implemented.",
+    "internal_error": "Internal server error.",
+    "service_unavailable": "Firestore service unavailable.",
+    "data_loss": "Data loss.",
+    "unauthenticated": "Unauthenticated.",
+    "socket_error": "No internet connection.",
+    "format_error": "Error processing data.",
+    "unknown_error": "Unexpected error",
+    "error_processing_exception": "Error processing the exception. Check with support"
+  }
+
+  
+  
+
+}

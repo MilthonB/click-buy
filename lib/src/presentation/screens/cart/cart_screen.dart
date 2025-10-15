@@ -4,6 +4,7 @@ import 'package:clickbuy/src/presentation/bloc/cubit/cart/cubit/cart_cubit.dart'
 import 'package:clickbuy/src/presentation/bloc/cubit/cart/cubit/cart_state.dart';
 import 'package:clickbuy/src/presentation/screens/cart/widgets/product_cart.dart';
 import 'package:clickbuy/src/presentation/widgets/sharaed/appbar_shared.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -94,7 +95,8 @@ class ContainerPayInfo extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "${totals['totalItems']} Artículos",
+                      'cart.items_label'.tr(namedArgs: {'count': totals['totalItems'].toString()}),
+                      // "${totals['totalItems']} Artículos",
                       style: const TextStyle(fontSize: 16),
                     ),
 
@@ -124,7 +126,7 @@ class ContainerPayInfo extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      "Pagar",
+                      "cart.pay_button".tr(),
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -26,7 +27,7 @@ class LoadingDialog {
                 child: Image.network(product.imagen, height: 80, width: 80, fit: BoxFit.cover),
               ),
               const SizedBox(height: 12),
-              const Text('Agregando al carrito...',
+              Text('loading.adding_to_cart'.tr(),
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               const SizedBox(height: 4),
               Text('${product.title} x $quantity',

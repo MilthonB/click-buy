@@ -1,4 +1,5 @@
 import 'package:clickbuy/src/presentation/bloc/cubit/products/cubit/products_cubit.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,7 +24,7 @@ class SearchProduuctsHome extends StatelessWidget {
                 controller: _controller,
                 decoration: InputDecoration(
                   isDense: true,
-                  hintText: "Buscar productos...",
+                  hintText: "products.search_products_hint".tr(),
                   hintStyle: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.black26,

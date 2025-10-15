@@ -8,37 +8,57 @@ import 'package:clickbuy/src/presentation/widgets/sharaed/dialog_add_product_sha
 import 'package:clickbuy/src/presentation/widgets/sharaed/quantity_buttons_shared.dart';
 import 'package:clickbuy/src/presentation/widgets/sharaed/shared.dart';
 import 'package:clickbuy/src/presentation/widgets/sharaed/snackbar_helper_shared.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 
-class ProductsHome extends StatelessWidget {
+class ProductsHome extends StatefulWidget {
   const ProductsHome({super.key});
 
   @override
+  State<ProductsHome> createState() => _ProductsHomeState();
+}
+
+class _ProductsHomeState extends State<ProductsHome> {
+  
+
+
+  @override
   Widget build(BuildContext context) {
+
+    
     return BlocBuilder<ProductsCubit, ProductsState>(
       builder: (context, state) {
         return state.maybeWhen(
           loading: () => ShimmerProductShared(),
-          loaded: (products) => Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
+          loaded: (products){
+            return Stack(
               children: [
-                const SecctionTitleShared(
-                  nameSection: 'Productos',
-                  seeMore: '',
-                ),
-                ResponsiveGridView(
-                  items: products,
-                  columnWidth: 200,
-                  mainAxisExtent: 530,
-                  itemBuilder: (context, index) =>
-                      ProductCard(product: products[index]),
-                ),
-              ],
-            ),
-          ),
+                Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                children: [
+                  SecctionTitleShared(
+                    nameSection: 'products.section_products'.tr(),
+                    seeMore: '',
+                  ),
+                  ResponsiveGridView(
+                    items: products,
+                    columnWidth: 200,
+                    mainAxisExtent: 530,
+                    itemBuilder: (context, index) =>
+                        ProductCard(product: products[index]),
+                  ),
+                ],
+              ),
+                        ),
+                        
+              ]
+              
+              
+            );
+          },
           error: (message) => ErrorMessageShared(message: message),
           orElse: () => const SizedBox.shrink(),
         );
@@ -58,7 +78,7 @@ class ProductCard extends StatelessWidget {
     if (user == null) {
       SnackbarHelper.error(
         context,
-        'Para agregar productos es necesario iniciar sesión',
+        'cart.error_adding_product'.tr(),
       );
       return;
     }
@@ -70,19 +90,13 @@ class ProductCard extends StatelessWidget {
       await context.read<CartCubit>().addToCart(user.id, product, quantity: quantity);
       
       context.read<QuantityCubit>().setQuantity(product.id, 1, product.stock);
+      print('agregaste producto');
+      LoadingDialog.hide(context);
+      SnackbarHelper.success(context, 'cart.added_to_cart'.tr(namedArgs: {"product": product.title ?? "Producto desconocido"} ));
+    } catch (e) {
+      LoadingDialog.hide(context);
+      SnackbarHelper.error(context, 'cart.error_adding_product'.tr());
 
-      LoadingDialog.hide(context);
-      SnackbarHelper.success(
-        context,
-        'Agregaste ${product.title} al carrito',
-      );
-    } catch (e, s) {
-      debugPrint('Error al agregar producto: $e\n$s');
-      LoadingDialog.hide(context);
-      SnackbarHelper.error(
-        context,
-        'Ocurrió un error al agregar el producto',
-      );
     }
   }
 
@@ -193,8 +207,8 @@ class ProductCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child: const Text(
-                        "Agregar",
+                      child: Text(
+                        "cart.add_button".tr(),
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     );

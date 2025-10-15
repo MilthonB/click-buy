@@ -1,6 +1,8 @@
 import 'package:clickbuy/src/presentation/bloc/cubit/auth/cubit/auth_cubit.dart';
 import 'package:clickbuy/src/presentation/bloc/cubit/auth/cubit/auth_state.dart';
 import 'package:clickbuy/src/presentation/bloc/cubit/cart/cubit/cart_cubit.dart';
+import 'package:clickbuy/src/presentation/widgets/sharaed/snackbar_helper_shared.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -24,29 +26,20 @@ class BlocConsumerWidget extends StatelessWidget {
             if (Navigator.canPop(context)) Navigator.pop(context);
 
             if (isRegister) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  backgroundColor: Colors.teal,
-                  content: Text(
-                    'Tu registro fue exitoso ahora puedes iniciar sesion',
-                  ),
-                ),
-              );
+              SnackbarHelper.success(context, 'register_success'.tr());
               context.go('/login');
             }
 
             SnackBar(
               backgroundColor: Colors.teal,
-              content: Text('Hubo problemas en el registros'),
+              content: Text('register_error'.tr()),
             );
           },
           error: (message) {
             if (Navigator.canPop(context)){
               Navigator.pop(context); // cerrar loader
             }
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text('Error: $message')));
+            SnackbarHelper.error(context, message);
           },
           loading: () {
             showDialog(

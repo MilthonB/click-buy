@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dio/dio.dart';
 
@@ -12,7 +13,7 @@ class ErrorToMessage {
           case DioExceptionType.sendTimeout:
           case DioExceptionType.receiveTimeout:
             return NetworkException(
-              'Tiempo de conexión agotado. Revisa tu internet.',
+              'error_message.network_timeout'.tr(),
             );
           case DioExceptionType.badResponse:
             final status = error.response?.statusCode;
@@ -20,15 +21,15 @@ class ErrorToMessage {
             if (status == 404) return NotFoundException();
             if (status == 500) return ServerException();
             return UnknownException(
-              'Error inesperado del servidor (${status ?? 'sin código'}).',
+              'error_message.unexpected_server'.tr(),
             );
           case DioExceptionType.cancel:
-            return UnknownException('La solicitud fue cancelada.');
+            return UnknownException('error_message.request_cancelled'.tr());
           case DioExceptionType.connectionError:
           case DioExceptionType.unknown:
-            return NetworkException('Error de conexión. Verifica tu internet.');
+            return NetworkException('error_message.network_connection'.tr());
           default:
-            return UnknownException(error.message ?? 'Error inesperado.');
+            return UnknownException(error.message ?? 'unexpected_server'.tr());
         }
       }
 
@@ -36,42 +37,42 @@ class ErrorToMessage {
       if (error is FirebaseAuthException) {
         switch (error.code) {
           case 'user-not-found':
-            return NotFoundException('Usuario no encontrado.');
+            return NotFoundException('error_message.user_not_found'.tr());
           case 'wrong-password':
-            return UnauthorizedException('Contraseña incorrecta.');
+            return UnauthorizedException('error_message.wrong_password'.tr());
           case 'email-already-in-use':
             return FirebaseAuthExceptionApp(
-              'El correo electrónico ya está registrado.',
+              'error_message.email_already_in_use'.tr(),
             );
           case 'invalid-email':
-            return FirebaseAuthExceptionApp('Correo electrónico inválido.');
+            return FirebaseAuthExceptionApp('error_message.invalid_email'.tr());
           case 'weak-password':
             return FirebaseAuthExceptionApp(
-              'La contraseña es demasiado débil.',
+              'error_message.weak_password'.tr(),
             );
           case 'user-disabled':
-            return UnauthorizedException('La cuenta ha sido deshabilitada.');
+            return UnauthorizedException('error_message.user_disabled'.tr());
           case 'operation-not-allowed':
             return FirebaseAuthExceptionApp(
-              'Operación no permitida. Contacta al administrador.',
+              'error_message.operation_not_allowed'.tr(),
             );
           case 'account-exists-with-different-credential':
             return FirebaseAuthExceptionApp(
-              'Ya existe una cuenta con diferentes credenciales.',
+              'error_message.account_exists_with_different_credential'.tr(),
             );
-          case 'invalid-credential':
+          case 'error_message.invalid-credential':
             return FirebaseAuthExceptionApp(
-              'Credencial inválida. Intenta iniciar sesión nuevamente.',
+              'error_message.invalid_credential'.tr(),
             );
           case 'invalid-verification-code':
-            return FirebaseAuthExceptionApp('Código de verificación inválido.');
+            return FirebaseAuthExceptionApp('error_message.invalid_verification_code'.tr());
           case 'invalid-verification-id':
-            return FirebaseAuthExceptionApp('ID de verificación inválido.');
+            return FirebaseAuthExceptionApp('error_message.invalid_verification_id'.tr());
           case 'network-request-failed':
-            return NetworkException('Problema de conexión con Firebase.');
+            return NetworkException('error_message.network_request_failed'.tr());
           case 'too-many-requests':
             return FirebaseAuthExceptionApp(
-              'Demasiados intentos. Intenta más tarde.',
+              'error_message.too_many_requests'.tr(),
             );
           default:
             return FirebaseAuthExceptionApp(
@@ -85,44 +86,44 @@ class ErrorToMessage {
         switch (error.code) {
           case 'permission-denied':
             return UnauthorizedException(
-              'No tienes permiso para realizar esta acción.',
+              'error_message.permission_denied'.tr(),
             );
           case 'not-found':
-            return NotFoundException('Documento no encontrado.');
+            return NotFoundException('error_message.document_not_found.tr()');
           case 'already-exists':
-            return UnauthorizedException('El documento ya existe.');
+            return UnauthorizedException('error_message.document_already_exists'.tr());
           case 'resource-exhausted':
-            return ServerException('Se ha agotado el recurso.');
+            return ServerException('error_message.resource_exhausted'.tr());
           case 'deadline-exceeded':
-            return ServerException('Se ha superado el tiempo límite.');
+            return ServerException('error_message.deadline_exceeded'.tr());
           case 'aborted':
-            return ServerException('La operación fue abortada.');
+            return ServerException('error_message.operation_aborted'.tr());
           case 'out-of-range':
-            return ServerException('Valor fuera de rango.');
+            return ServerException('error_message.out_of_range'.tr());
           case 'unimplemented':
-            return ServerException('Operación no implementada.');
+            return ServerException('error_message.unimplemented'.tr());
           case 'internal':
-            return ServerException('Error interno del servidor.');
+            return ServerException('error_message.internal_error'.tr());
           case 'unavailable':
-            return NetworkException('Servicio de Firestore no disponible.');
+            return NetworkException('error_message.service_unavailable'.tr());
           case 'data-loss':
-            return ServerException('Pérdida de datos.');
+            return ServerException('error_message.data_loss'.tr());
           case 'unauthenticated':
-            return UnauthorizedException('No autenticado.');
+            return UnauthorizedException('error_message.unauthenticated'.tr());
           default:
             return UnknownException(
-              'Error de Firestore: ${error.message ?? 'desconocido'}.',
+              'Error de Firestore:',
             );
         }
       }
       // === SOCKET / INTERNET EXCEPTIONS ===
       if (error is SocketException) {
-        return NetworkException('Sin conexión a internet.');
+        return NetworkException('error_message.socket_error'.tr());
       }
 
       // === FORMAT EXCEPTIONS ===
       if (error is FormatException) {
-        return UnknownException('Error al procesar los datos.');
+        return UnknownException('error_message.format_error'.tr());
       }
 
       // === ALREADY IS AppException ===
@@ -132,8 +133,8 @@ class ErrorToMessage {
 
       // === UNEXPECTED ERROR ===
       return UnknownException(error.toString());
-    } catch (e, s) {
-      return UnknownException('Error al procesar la excepción. veririfica con soporte');
+    } catch (e) {
+      return UnknownException('error_message.error_processing_exception'.tr());
     }
   }
 }

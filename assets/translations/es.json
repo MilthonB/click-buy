@@ -1,0 +1,102 @@
+{
+  "_comment_login_section": "Textos de la pantalla de login",
+
+  "auth": {
+    "app_name": "Click Buy",
+    "welcome_title": "Bienvenido 👋",
+    "welcome_message": "Inicia sesión para continuar con tu experiencia.",
+    "email_hint": "Correo electrónico",
+    "password_hint": "Contraseña",
+    "login_button": "Iniciar sesión",
+    "forgot_password": "¿Olvidaste tu contraseña?",
+    "no_account": "¿No tienes cuenta?",
+    "register_button": "Regístrate",
+    "empty_fields_warning": "Por favor completa todos los campos",
+    "fill_all_fields": "Por favor completa todos los campos",
+    "passwords_do_not_match": "Las contraseñas no coinciden",
+
+    "register_title": "Crear cuenta",
+    "register_welcome": "Regístrate para comenzar tu experiencia.",
+    "full_name": "Nombre completo",
+    "confirm_password": "Confirmar contraseña",
+    "already_have_account": "¿Ya tienes cuenta?",
+    "go_login": "Inicia sesión",
+    "register_success": "Registro exitoso 🎉",
+    "register_error": "Error al registrarse, inténtalo de nuevo"
+  },
+
+  "cart": {
+    "login_required_to_add": "Debes iniciar sesión para agregar productos",
+    "added_to_cart": "Has agregado {product} al carrito",
+    "error_adding_product": "Ocurrió un error al agregar el producto",
+    "add_button": "Agregar",
+     "items_label": "{count} Items",
+    "pay_button": "Pay"
+  },
+
+  "products": {
+    "section_products": "Productos",
+    "search_products_hint": "Buscar productos...",
+    "stock": "Stock: {quantity} unidades",
+    "description_label": "Descripción:",
+    "add_to_cart_button": "Agregar",
+    "login_required": "Debes iniciar sesión para agregar productos",
+    "added_to_cart": "Agregaste {product} x {quantity} al carrito"
+  },
+
+  "nav": {
+    "home": "Inicio",
+    "products": "Productos",
+    "cart": "Carrito"
+  },
+
+  "profile": {
+    "welcome_back": "Bienvenido de nuevo",
+    "name_label": "Nombre",
+    "logout_button": "Cerrar sesión"
+  },
+
+
+  "loading": {
+    "adding_to_cart": "Agregando al carrito..."
+  
+},
+
+"error_message": {
+    "title": "Ups... algo salió mal 😔",
+    "retry_button": "Reintentar",
+      "network_timeout": "Tiempo de conexión agotado. Revisa tu internet.",
+    "network_connection": "Error de conexión. Verifica tu internet.",
+    "request_cancelled": "La solicitud fue cancelada.",
+    "unexpected_server": "Error inesperado del servidor.",
+    "user_not_found": "Usuario no encontrado.",
+    "wrong_password": "Contraseña incorrecta.",
+    "email_already_in_use": "El correo electrónico ya está registrado.",
+    "invalid_email": "Correo electrónico inválido.",
+    "weak_password": "La contraseña es demasiado débil.",
+    "user_disabled": "La cuenta ha sido deshabilitada.",
+    "operation_not_allowed": "Operación no permitida. Contacta al administrador.",
+    "account_exists_with_different_credential": "Ya existe una cuenta con diferentes credenciales.",
+    "invalid_credential": "Credencial inválida. Intenta iniciar sesión nuevamente.",
+    "invalid_verification_code": "Código de verificación inválido.",
+    "invalid_verification_id": "ID de verificación inválido.",
+    "network_request_failed": "Problema de conexión con Firebase.",
+    "too_many_requests": "Demasiados intentos. Intenta más tarde.",
+    "permission_denied": "No tienes permiso para realizar esta acción.",
+    "document_not_found": "Documento no encontrado.",
+    "document_already_exists": "El documento ya existe.",
+    "resource_exhausted": "Se ha agotado el recurso.",
+    "deadline_exceeded": "Se ha superado el tiempo límite.",
+    "operation_aborted": "La operación fue abortada.",
+    "out_of_range": "Valor fuera de rango.",
+    "unimplemented": "Operación no implementada.",
+    "internal_error": "Error interno del servidor.",
+    "service_unavailable": "Servicio de Firestore no disponible.",
+    "data_loss": "Pérdida de datos.",
+    "unauthenticated": "No autenticado.",
+    "socket_error": "Sin conexión a internet.",
+    "format_error": "Error al procesar los datos.",
+    "unknown_error": "Error inesperado",
+    "error_processing_exception": "Error al procesar la excepción. Verifica con soporte"
+  }
+}

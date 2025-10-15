@@ -1,6 +1,7 @@
 import 'package:clickbuy/src/presentation/widgets/sharaed/dialog_add_product_shared.dart';
 import 'package:clickbuy/src/presentation/widgets/sharaed/quantity_buttons_shared.dart';
 import 'package:clickbuy/src/presentation/widgets/sharaed/snackbar_helper_shared.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -56,11 +57,12 @@ class ProductBottomSheetContent extends StatelessWidget {
             _ProductTitlePrice(product: product),
             const SizedBox(height: 8),
             Text("SKU: ${product.sku}", style: const TextStyle(color: Colors.grey)),
-            Text("Stock: ${product.stock} unidades", style: const TextStyle(color: Colors.grey)),
+            Text('products.stock'.tr(namedArgs: {'quantity':product.stock.toString()}), style: const TextStyle(color: Colors.grey)),
+            // Text("Stock: ${product.stock} unidades", style: const TextStyle(color: Colors.grey)),
             const SizedBox(height: 12),
             RatingStars(rating: product.rating),
             const SizedBox(height: 16),
-            const Text("Descripción:", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            Text("products.description_label".tr(), style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             const SizedBox(height: 4),
             Text(product.description, style: const TextStyle(fontSize: 14, color: Colors.black87)),
             const SizedBox(height: 20),
@@ -93,7 +95,8 @@ class _AddToCartSection extends StatelessWidget {
             LoadingDialog.hide(context);
             SnackbarHelper.success(
               context,
-              'Agregaste ${product.title} x $quantity al carrito',
+              'products.added_to_cart'.tr(namedArgs: {'product': product.title, 'quantity':quantity.toString()})
+              // 'Agregaste ${product.title} x $quantity al carrito',
             );
             Navigator.pop(context); // cerrar el bottom sheet
           },
@@ -112,7 +115,7 @@ class _AddToCartSection extends StatelessWidget {
             onPressed: () {
               final user = context.read<AuthCubit>().getUser();
               if (user == null) {
-                SnackbarHelper.error(context, 'Debes iniciar sesión para agregar productos');
+                SnackbarHelper.error(context, 'products.login_required'.tr());
                 return;
               }
               context.read<CartCubit>().addToCart(user.id, product, quantity: quantity);
@@ -123,7 +126,7 @@ class _AddToCartSection extends StatelessWidget {
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             ),
-            child: const Text("Agregar", style: TextStyle(fontWeight: FontWeight.bold)),
+            child: Text("products.add_to_cart_button".tr(), style: TextStyle(fontWeight: FontWeight.bold)),
           ),
         ],
       ),
