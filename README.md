@@ -6,6 +6,9 @@ Este proyecto usa Flutter y Firebase. Para poder correrlo localmente, debes segu
 
 ---
 
+> **Nota:** Este proyecto ya cuenta con soporte para Bloc/Cubit y tiene soporte para inglés y español. 
+
+
 ## 1️⃣ Clonar el repositorio
 
 ```bash
