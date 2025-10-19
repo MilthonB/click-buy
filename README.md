@@ -142,4 +142,210 @@ Esta estructura sigue principios de Clean Architecture, separando responsabilida
 }
 ```
 
- 
+<br>
+<br>
+
+
+# 🚀 Guía Completa: Configuración de Firebase en un Proyecto Flutter (ClickBuy)
+
+Esta guía explica paso a paso cómo **conectar un proyecto Flutter existente** con un **proyecto Firebase que ya está creado**, incluyendo:
+
+- Instalación de herramientas necesarias (`Firebase CLI` y `FlutterFire CLI`)
+- Descarga y colocación de archivos de configuración (`google-services.json` y `firebase_options.dart`)
+- Inicialización de Firebase dentro del código Flutter
+
+Compatible con:
+- 🐧 Fedora / Debian (Linux)
+- 🪟 Windows
+- 🍏 macOS
+
+
+## 🧩 1. Requisitos previos
+
+### ✅ Debes tener instalado:
+- **Flutter SDK**
+- **Dart SDK**
+- **Node.js** (incluye npm)
+- **Git**
+
+Verifica con:
+```bash
+flutter --version
+dart --version
+node -v
+npm -v
+```
+## 🧩 2. Descargar el archivo `google-services.json` (Android)
+
+1. Entra a [Firebase Console](https://console.firebase.google.com)
+2. Selecciona tu proyecto (por ejemplo, **ClickBuy**)
+3. Haz clic en el ícono del engrane ⚙️ → **Configuración del proyecto**
+4. Baja hasta la sección **Tus apps**
+5. En la app de Android, haz clic y presiona:  
+   **“Descargar archivo `google-services.json`”**
+6. Guarda el archivo en tu proyecto Flutter en la ruta: **android/app/**
+
+
+📌 Este archivo vincula tu app Android con Firebase. **No lo subas a GitHub**.
+
+
+## 🧩 3. (Opcional) Descargar archivo para iOS
+
+Si usas iOS, en la misma consola de Firebase:
+
+1. En la app de iOS, haz clic en:  
+   **“Descargar `GoogleService-Info.plist`”**
+2. Guárdalo en la ruta de tu proyecto Flutter: **ios/Runner/**
+
+## 🧩 4. Instalar Firebase CLI
+
+### 🔹 Verifica si ya lo tienes instalado
+```bash
+firebase --version
+```
+
+* si ves un número de versión (ej. 13.2.0), ya lo tienes.
+* Si aparece “comando no encontrado”, sigue las instrucciones según tu sistema:
+
+### 🐧 En Fedora / Debian / Linux
+
+Primero asegúrate de tener Node.js y npm:
+```bash
+node -v
+npm -v
+```
+
+
+Si no los tienes, instala Node.js:
+
+* En Fedora:
+```bash
+sudo dnf install nodejs npm -y
+```
+* En Debian / Ubuntu:
+```bash 
+sudo apt install nodejs npm -y
+```
+
+
+Luego instala Firebase CLI globalmente:
+```bash
+sudo npm install -g firebase-tools
+```
+
+
+
+### 🍏 En macOS
+
+Instala con Homebrew (recomendado):
+
+```bash
+brew install node
+brew install firebase-cli
+```
+
+
+O con npm:
+```bash
+sudo npm install -g firebase-tools
+```
+
+### 🪟 En Windows
+
+Descarga e instala Node.js desde https://nodejs.org
+
+La instalación de Node agrega npm automáticamente.
+
+Abre PowerShell o CMD y ejecuta:
+```bash
+npm install -g firebase-tools
+```
+
+### 🧩 5. Iniciar sesión en Firebase
+
+Una vez instalado el CLI, inicia sesión con tu cuenta de Google (la misma que usas en Firebase):
+
+Desde la terminal :
+```bash
+firebase login
+```
+
+Esto abrirá el navegador para autorizar la conexión.
+
+### 🧩 6. Instalar FlutterFire CLI
+
+El siguiente paso es instalar el CLI oficial de Flutter para Firebase.
+Este comando genera el archivo firebase_options.dart, necesario para inicializar Firebase en tu proyecto Flutter.
+
+Ejecuta desde la terminal:
+```bash
+dart pub global activate flutterfire_cli
+```
+
+Verifica que se haya activado correctamente:
+
+```bash
+dart pub global list
+```
+
+Deberías ver algo como:
+```bash
+flutterfire_cli 1.x.x
+```
+### 🧩 7. Agregar FlutterFire al PATH
+
+Esto permite que el comando flutterfire funcione en cualquier carpeta.
+
+### 🐧 Fedora / Debian (Linux)
+
+Ejecuta desde la termial 
+```bash
+export PATH="$PATH":"$HOME/.pub-cache/bin"
+```
+
+Para hacerlo permanente (recomendado):
+```bash
+echo 'export PATH="$PATH":"$HOME/.pub-cache/bin"' >> ~/.bashrc
+source ~/.bashrc
+```
+### 🍏 macOS
+```bash
+export PATH="$PATH":"$HOME/.pub-cache/bin"
+echo 'export PATH="$PATH":"$HOME/.pub-cache/bin"' >> ~/.zshrc
+source ~/.zshrc
+```
+### 🪟 Windows
+
+En Windows, no es necesario hacerlo manualmente, ya que el instalador de Dart agrega esta ruta automáticamente:
+
+```bash 
+%USERPROFILE%\AppData\Roaming\Pub\Cache\bin
+```
+
+Si el comando no funciona, reinicia tu terminal y prueba:
+```bash
+flutterfire --version
+```
+### 🧩 8. Generar configuración de Firebase
+
+Ahora sí, desde la raíz de tu proyecto Flutter, ejecuta:
+```bash
+flutterfire configure
+```
+Durante el proceso:
+
+* Selecciona tu proyecto Firebase (ejemplo: ClickBuy)
+
+* Marca las plataformas que usarás (Android, iOS, Web)
+
+* Espera unos segundos...
+
+* Al finalizar, verás un mensaje como:
+
+* Generated file lib/firebase_options.dart
+
+Ese archivo contiene toda la configuración de Firebase (API keys, projectId, etc).
+
+
+
+
